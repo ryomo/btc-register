@@ -1,0 +1,53 @@
+#:include views/partials/numpad.kv
+
+<WaitFiatScreen>:
+    canvas.before:
+        Color:
+            rgb: .5, .5, .5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        FlashMessage:
+            size_hint_y: 1
+            text: root.message
+
+        BoxLayout:
+            size_hint_y: 1
+
+            Label:
+                font_size: 24
+                text: 'Total: {} {:,}'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.payment_total))
+
+            Label:
+                font_size: 24
+                text: 'Paid: {} {:,}'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.payment_paid))
+
+            Label:
+                font_size: 24
+                text: 'Change: {} {:,}'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.payment_change))
+
+        NumPadChange:
+            size_hint_y: 8
+            id: numpad
+            number_display_font_size: 30
+            image_button_source: 'assets/open_iconic/inverted/check-4x.png'
+
+        BoxLayout:
+            size_hint_y: 1
+
+            Button:
+                size_hint_x: 1
+                text: 'Cancel'
+                on_release: root.back_to_input_screen()
+
+            Button:
+                size_hint_x: 1
+                text: 'Done'
+                disabled: True if root.payment_paid <= 0 or root.payment_change < 0 else False
+                on_release: root.push_done_button()

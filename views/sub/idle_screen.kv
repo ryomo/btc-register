@@ -1,0 +1,17 @@
+#:include views/partials/price_label.kv
+
+# TODO: Add message like "Bitcoin Lightning Network Payment Accepted"
+
+<IdleScreen>:
+    canvas.before:
+        Color:
+            rgb: .5, .5, .5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        PriceLabel:
+            font_size: 50
+            btcprice: root.btcprice
+            btcprice_date: root.btcprice_date

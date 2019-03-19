@@ -1,0 +1,137 @@
+<SettingScreen>:
+    exchange_spinner: exchange_spinner
+
+    canvas.before:
+        Color:
+            rgb: .5, .5, .5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 10
+
+        BoxLayout:
+            size_hint_y: 1
+            spacing: 10
+
+            FlashMessage:
+                size_hint_x: 9
+                text: root.message
+
+            DropDownMenu:
+                size_hint_x: 1
+
+        ScrollView:
+            size_hint_y: 8
+            scroll_type: ['bars', 'content']
+            bar_width: 5
+
+            BoxLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                spacing: 10
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: 48
+                    LabelSection:
+                        size_hint_x: 1
+                        text: '[btc]'
+
+                    BoxLayout:
+                        size_hint_x: 9
+                        orientation: 'vertical'
+                        spacing: 5
+                        BoxLayout:
+                            LabelOption:
+                                size_hint_x: 2
+                                text: 'price'
+                            Spinner:
+                                size_hint_x: 7
+                                id: exchange_spinner
+                                values: root.exchanges
+                                on_text: root.select_exchange_spinner(self.text)
+
+                Widget:
+                    size_hint_y: None
+                    height: 24
+
+                Label:
+                    size_hint_y: None
+                    height: 48
+                    text: 'Below settings are read only. You needs to edit `app_config.ini`.'
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: 48
+                    LabelSection:
+                        size_hint_x: 1
+                        text: '[shop]'
+                    LabelOption:
+                        size_hint_x: 2
+                        text: 'name'
+                    TextInputValue:
+                        size_hint_x: 7
+                        text: root.shop_name
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: 48 * 3
+                    LabelSection:
+                        size_hint_x: 1
+                        text: '[lnd]'
+
+                    BoxLayout:
+                        size_hint_x: 9
+                        orientation: 'vertical'
+                        spacing: 5
+                        BoxLayout:
+                            LabelOption:
+                                size_hint_x: 2
+                                text: 'url'
+                            TextInputValue:
+                                size_hint_x: 7
+                                text: root.lnd_url
+                        BoxLayout:
+                            LabelOption:
+                                size_hint_x: 2
+                                text: 'cert_path'
+                            TextInputValue:
+                                size_hint_x: 7
+                                text: root.lnd_cert_path
+                        BoxLayout:
+                            LabelOption:
+                                size_hint_x: 2
+                                text: 'macaroon_path'
+                            TextInputValue:
+                                size_hint_x: 7
+                                text: root.lnd_macaroon_path
+
+        BoxLayout:
+            size_hint_y: None
+            height: 48
+            Widget:
+                size_hint_x: 8
+            Button:
+                size_hint_x: 2
+                text: 'Save and Restart'
+                on_release: root.save_and_restart()
+
+<LabelSection@Label>
+    markup: True
+    font_size: 20
+
+<LabelOption@Label>
+    markup: True
+    font_size: 20
+
+# Note: Disable TextInput, because of this issue. [issue #4253](https://github.com/kivy/kivy/issues/4253)
+<TextInputValue@TextInput>
+    disabled: True
+    font_size: 20
+    text_size: self.size
+    multiline: False

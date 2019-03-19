@@ -1,0 +1,12 @@
+#:include views/partials/qr_code.kv
+
+<QrScreen>:
+
+    QrCodeSub:
+        btcprice_fixed: root.btcprice_fixed
+        btcprice_date_fixed: root.btcprice_date_fixed
+        payment_satoshi: root.payment_satoshi
+        payment_amount: root.payment_amount
+        qrcode_texture: root.qrcode_texture
+        result_texture: root.result_texture
+        result_texture_alpha: root.result_texture_alpha

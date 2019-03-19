@@ -1,0 +1,31 @@
+<LndUnlockScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        BoxLayout:
+            size_hint_y: 2
+            spacing: 5
+
+            TextInput:
+                id: text_input
+                size_hint_x: 8
+                font_size: 44
+                text_size: self.size
+                multiline: False
+#                password: True
+                focus: True
+#                on_parent: self.focus = True
+                is_focusable: True
+                unfocus_on_touch: False
+
+            Button:
+                size_hint_x: 2
+    #            on_release: root.push_delete_button()
+                Image:
+                    source: 'assets/open_iconic/inverted/delete-4x.png'
+                    center: self.parent.center
+
+        Widget:
+            size_hint_y: 8

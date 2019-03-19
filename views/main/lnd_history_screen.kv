@@ -1,0 +1,139 @@
+<LndHistoryScreen>:
+    canvas.before:
+        Color:
+            rgb: .5, .5, .5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        BoxLayout:
+            size_hint_y: 1
+            spacing: 10
+
+            FlashMessage:
+                size_hint_x: 9
+                text: root.message
+
+            DropDownMenu:
+                size_hint_x: 1
+
+        BoxLayout:
+            size_hint_y: 1
+            spacing: 5
+
+            Button:
+                on_release: root.reload_page()
+                Image:
+                    source: 'assets/open_iconic/inverted/reload-2x.png'
+                    center: self.parent.center
+            Button:
+                text: '|<'
+                on_release: root.move_page_first()
+            Button:
+                text: '<'
+                on_release: root.move_page_prev()
+            Button:
+                text: '>'
+                on_release: root.move_page_next()
+            Button:
+                text: '>|'
+                on_release: root.move_page_last()
+            Button:
+                on_release: root.reverse_sort()
+                Image:
+                    source: 'assets/open_iconic/inverted/sort-{}-2x.png'.format('descending' if root.sort_reversed else 'ascending')
+                    center: self.parent.center
+
+        BoxLayout:
+            size_hint_y: .5
+            canvas.before:
+                Color:
+                    rgb: .4, .4, .4
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            Label:
+                size_hint_x: .5
+                text: 'id'
+            Label:
+                text: 'memo'
+            Label:
+                text: 'satoshi'
+            Label:
+                text: 'date'
+            Label:
+                size_hint_x: .5
+                text: 'settled'
+
+        BoxLayout:
+            size_hint_y: 7.5
+
+            RecycleView:
+                id: rv
+                data: root.invoices
+                viewclass: 'LndHistoryRow'
+                scroll_type: ['bars', 'content']
+                bar_width: 5
+                RecycleBoxLayout:
+                    default_size: None, 56
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    spacing: 2
+
+
+<LndHistoryRow>:
+    on_release: app.screen_manager.current_screen.popup(self.r_hash)
+    Label:
+        size_hint_x: .5
+        text: root.add_index
+    Label:
+        text: root.memo
+        max_lines: 1
+    Label:
+        text: root.satoshi
+    Label:
+        text: root.creation_date
+    Label:
+        size_hint_x: .5
+        text: root.settled
+
+
+<LndDetailPopup>:
+    size_hint: .8, .8
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        BoxLayout:
+            size_hint_y: 9
+            id: container
+            orientation: 'vertical'
+            padding: 5
+            spacing: 5
+
+        Button:
+            size_hint_y: 1
+            text: 'close'
+            on_release: root.dismiss()
+
+
+<LndDetailRow>:
+    Label:
+        size_hint_x: 2
+        text: root.title
+        text_size: self.size
+        halign: 'center'
+    Label:
+        size_hint_x: 8
+        text: root.text
+        text_size: self.size  # text_size must be set to get align working
+        halign: 'left'

@@ -1,0 +1,54 @@
+#
+# Common parts
+#
+
+<FlashMessage@Bubble>
+    show_arrow: False
+    text: ''
+    Label:
+        markup: True
+        text: root.text
+
+
+<DropDownMenu@BoxLayout>:
+    # See [To keep the widget alive...](https://kivy.org/doc/stable/guide/lang.html#referencing-widgets)
+    dropdown: dropdown.__self__
+    Button:
+        text: '≡'
+        on_release: dropdown.open(self)
+        size_hint_y: None
+        height: 48
+    Widget:
+        size_hint_x: 0
+        on_parent: dropdown.dismiss()
+    DropDown:
+        id: dropdown
+        on_select: app.screen_manager.load_screen(args[1])
+        ChangeScreenButton:
+            text: 'Home'
+            screen: 'home'
+            on_release: dropdown.select(self.screen)
+        ChangeScreenButton:
+            text: 'History'
+            screen: 'history'
+            on_release: dropdown.select(self.screen)
+        ChangeScreenButton:
+            text: 'LND\nHistory'
+            screen: 'lnd_history'
+            on_release: dropdown.select(self.screen)
+        ChangeScreenButton:
+            text: 'Setting'
+            screen: 'setting'
+            on_release: dropdown.select(self.screen)
+        Button:
+            text: 'Display OFF'
+            size_hint_y: None
+            height: 48
+            on_release: dropdown.dismiss(); app.screen_manager.disable_backlight()
+
+
+<ChangeScreenButton@Button>:
+    screen: ''
+    size_hint_y: None
+    height: 48
+    disabled: True if app.screen_manager.current == self.screen else False
