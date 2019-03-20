@@ -34,7 +34,7 @@ pip3 install --user --upgrade git+https://github.com/kivy/kivy.git@master
 pip3 install --user --upgrade qrcode requests
 
 # ufw
-echo ${password} | sudo -S apt-get install ufw
+echo ${password} | sudo -S apt-get install -y ufw
 if ${ENABLE_SSH}; then
     echo ${password} | sudo -S ufw allow ssh comment 'ssh'
     echo ${password} | sudo -S ufw --force enable  # `--force` disable prompting y/n even when enabling over ssh.
@@ -44,7 +44,7 @@ fi
 echo ${password} | sudo -S ufw status verbose
 
 # unattended-upgrades
-echo ${password} | sudo -S apt-get unattended-upgrades
+echo ${password} | sudo -S apt-get install -y unattended-upgrades
 # Edits /etc/apt/apt.conf.d/20auto-upgrades
 # autoclean
 if ! grep -qF 'AutocleanInterval' /etc/apt/apt.conf.d/20auto-upgrades; then
