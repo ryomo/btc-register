@@ -220,7 +220,7 @@ class PaymentMethodPopup(Popup):
         from api.lnd import Lnd
         lnd = self.app.lnd  # type: Lnd
         screen = self.screen_manager.current_screen  # type: HomeScreen
-        shop_name = self.app.app_config.get('shop', 'name')
+        shop_name = self.app.app_config.get('app', 'shop_name')
 
         btcprice = self.app.btcprice
         btcprice_date = self.app.btcprice_date

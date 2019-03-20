@@ -4,11 +4,10 @@ from configparser import ConfigParser
 class Config(ConfigParser):
 
     default_ini = """
-[shop]
-name = My Shop
-
-[fiat]
-name = USD
+[app]
+shop_name = My Shop
+lang = en
+fiat = USD
 
 [btc]
 price = GDAX(USD)

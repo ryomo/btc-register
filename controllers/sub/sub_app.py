@@ -48,7 +48,7 @@ class SubApp(App):
         thread = Thread(target=receive_pipe, args=(self._pipe,))
         thread.start()
 
-        self.fiat = Fiat(self.app_config.get('fiat', 'name'))
+        self.fiat = Fiat(self.app_config.get('app', 'fiat'))
 
         Clock.schedule_interval(self.update_btcdata, 1 / 30)
 

@@ -48,15 +48,15 @@ class MainApp(App):
         self.db = Db(db_path, APP_PATH + '/schemas/')
 
         c = self.app_config
-        logger.debug('TEST: []'.format(self.app_config))
+        logger.debug('APP CONFIG: []'.format(self.app_config))
         if c.get('lnd', 'url') and c.get('lnd', 'cert_path') and c.get('lnd', 'macaroon_path'):
             self.lnd = Lnd(c.get('lnd', 'url'), c.get('lnd', 'cert_path'), c.get('lnd', 'macaroon_path'))
         else:
             self.lnd = None
 
-        self.messenger = Messenger()
+        self.messenger = Messenger(self.app_config.get('app', 'lang'))
 
-        self.fiat = Fiat(self.app_config.get('fiat', 'name'))
+        self.fiat = Fiat(self.app_config.get('app', 'fiat'))
 
         exchange_enum = ExchangeEnum(self.app_config.get('btc', 'price'))  # type: ExchangeEnum
         self.exchange = Exchange(exchange_enum)

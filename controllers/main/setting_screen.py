@@ -28,7 +28,7 @@ class SettingScreen(MainScreenBase):
         exchange_enum = self.app.exchange.get_exchange_enum()
         self.exchange_spinner.text = exchange_enum.value
 
-        self.shop_name = self.app.app_config.get('shop', 'name')
+        self.shop_name = self.app.app_config.get('app', 'shop_name')
         self.lnd_url = self.app.app_config.get('lnd', 'url')
         self.lnd_cert_path = self.app.app_config.get('lnd', 'cert_path')
         self.lnd_macaroon_path = self.app.app_config.get('lnd', 'macaroon_path')
@@ -41,9 +41,9 @@ class SettingScreen(MainScreenBase):
             exchange_enum = ExchangeEnum(self.selected_exchange_name)
             self.app.app_config.set('btc', 'price', self.selected_exchange_name)
             fiat_name = exchange_enum.get_fiat_name()
-            self.app.app_config.set('fiat', 'name', fiat_name)
+            self.app.app_config.set('app', 'fiat', fiat_name)
 
-        self.app.app_config.set('shop', 'name', self.shop_name)
+        self.app.app_config.set('app', 'shop_name', self.shop_name)
 
         self.app.app_config.set('lnd', 'url', self.lnd_url)
         self.app.app_config.set('lnd', 'cert_path', self.lnd_cert_path)
