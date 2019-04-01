@@ -2,4 +2,7 @@
 .secret
 .backup/
 
+.idea/
+*.iml
+
 !.gitkeep
