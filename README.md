@@ -8,6 +8,7 @@ A cash register which also accepts Bitcoin Lightning Network payment.
 ## Requirements
 
 * LND node for Lightning Network payment
+    * v0.5.2-beta or newer
 * Raspberry Pi
 * Raspberry Pi Official Touch Display
 * (Optional) HDMI Display
