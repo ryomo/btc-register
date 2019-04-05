@@ -104,7 +104,7 @@ class Db:
         sql = (
             'PRAGMA user_version'
         )
-        row = self.execute_simple(sql, fetch=Fetch.ONE)  # type: dict
+        row = self.execute_simple(sql, fetch=Fetch.ONE)  # type: sqlite3.Row
         return row['user_version']
 
     def _update_schema_version(self, schema_version: int):
