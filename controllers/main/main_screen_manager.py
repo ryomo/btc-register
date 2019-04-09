@@ -1,7 +1,6 @@
 import logging
 
 from controllers.screen_manager_base import ScreenManagerBase
-from library.utils import Utils
 
 logger = logging.getLogger(__name__)
 
@@ -13,9 +12,6 @@ class MainScreenManager(ScreenManagerBase):
 
         self._interscreen_data = None
         """Data to be used across each screens."""
-
-        self._is_backlight_enabled = ...  # type: bool
-        self.enable_backlight()
 
     def load_screen(self, screen_name, process='main'):
         super().load_screen(screen_name, process)
@@ -48,15 +44,3 @@ class MainScreenManager(ScreenManagerBase):
             return tmp_interscreen_data
         else:
             return None
-
-    def on_touch_down(self, touch):
-        if self._is_backlight_enabled is False:
-            self.enable_backlight()
-        else:
-            return super().on_touch_down(touch)
-
-    def enable_backlight(self):
-        self._is_backlight_enabled = Utils.change_backlight_state(True)
-
-    def disable_backlight(self):
-        self._is_backlight_enabled = Utils.change_backlight_state(False)
