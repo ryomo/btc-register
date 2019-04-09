@@ -7,6 +7,13 @@ export KIVY_GL_BACKEND='gl'  # [issue #6007](https://github.com/kivy/kivy/issues
 BASE_DIR=$(cd $(dirname $0); pwd)
 RESTART_FILE="${APP_HOME}/.restart"
 
+# config file
+mkdir -p ${APP_HOME}
+mkdir -p ${KIVY_HOME}
+if [[ ! -f ${KIVY_HOME}/config.ini ]]; then
+    cp ${BASE_DIR}/config/kivy_default.ini ${KIVY_HOME}/config.ini
+fi
+
 # Restart run.py if `.restart` file exists.
 enable_loop=true
 while ${enable_loop}
