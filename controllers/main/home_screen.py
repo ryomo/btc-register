@@ -40,17 +40,18 @@ class HomeScreen(MainScreenBase):
         super().on_enter(*args)
 
         # Check if LND is available.
-        try:
-            if self.app.lnd:
-                self.app.lnd.getinfo()
-            else:
-                self.message = self.app.messenger.warning('LND is unavailable.')
-        except LndException as e:
-            self.app.lnd = None
-            if e.reason == LndException.NOT_CONNECTED:
-                self.message = self.app.messenger.warning('LND is not connected.')
-            elif e.reason == LndException.NOT_UNLOCKED:
-                self.message = self.app.messenger.warning('LND is not unlocked.')
+        # TODO: Below codes do not work with invoice.macaroon. Need some workaround...
+        # try:
+        #     if self.app.lnd:
+        #         self.app.lnd.getinfo()
+        #     else:
+        #         self.message = self.app.messenger.warning('LND is unavailable.')
+        # except LndException as e:
+        #     self.app.lnd = None
+        #     if e.reason == LndException.NOT_CONNECTED:
+        #         self.message = self.app.messenger.warning('LND is not connected.')
+        #     elif e.reason == LndException.NOT_UNLOCKED:
+        #         self.message = self.app.messenger.warning('LND is not unlocked.')
 
     def on_leave(self, *args):
         super().on_leave(*args)

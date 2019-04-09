@@ -97,6 +97,10 @@ class Lnd:
             raise LndException(LndException.NOT_UNLOCKED)
 
     def getinfo(self):
+        """
+        Note: This doesn't work with invoice.macaroon.
+        :return:
+        """
         return self._get_request('getinfo')
 
     def add_invoice(self, value: int, memo: str = None, **kwargs) -> (str, int, str):
