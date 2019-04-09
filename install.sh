@@ -35,8 +35,11 @@ echo ${password} | sudo -S apt-get install -y libsdl2-dev libsdl2-image-dev libs
 pip3 install --user Cython==0.28.2
 pip3 install --user git+https://github.com/kivy/kivy.git@${KIVY_TAG}
 
-# pip TODO: requirements.txt
-pip3 install --user qrcode requests
+# pip
+pip3 install --user requests
+
+# Some of pip packages does not work with arm.
+echo ${password} | sudo -S apt-get install -y python3-qrcode python3-pil
 
 # ufw
 echo ${password} | sudo -S apt-get install -y ufw
