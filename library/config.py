@@ -1,29 +1,23 @@
 from configparser import ConfigParser
 
+from run import APP_PATH
+
 
 class Config(ConfigParser):
 
-    default_ini = """
-[app]
-shop_name = My Shop
-lang = en
-fiat = USD
-
-[btc]
-price = GDAX(USD)
-
-[lnd]
-url = https://localhost:8080
-cert_path = ~/.btc-register/tls.cert
-macaroon_path = ~/.btc-register/admin.macaroon
-"""
-
-    def __init__(self, config_path, **kwargs):
+    def __init__(self, app_conf_path, **kwargs):
         super().__init__(**kwargs)
-        self._config_path = config_path
-        self.read_string(self.default_ini)
-        self.read(self._config_path)
+
+        default_conf_path = APP_PATH + '/config/app_default.ini'
+        self._app_conf_path = app_conf_path
+        user_conf_path = '/boot/btc-register-config/settings.ini'
+
+        self.read([
+            default_conf_path,
+            self._app_conf_path,
+            user_conf_path,
+        ])
 
     def write(self, **kwargs):
-        with open(self._config_path, 'w') as configf_file:
-            super().write(configf_file, **kwargs)
+        with open(self._app_conf_path, 'w') as config_file:
+            super().write(config_file, **kwargs)

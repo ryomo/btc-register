@@ -5,7 +5,7 @@ logging.Logger.manager.root = Logger
 
 import os
 
-APP_HOME = os.environ['APP_HOME']
+APP_HOME = os.path.expanduser(os.environ['APP_HOME'])
 APP_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
