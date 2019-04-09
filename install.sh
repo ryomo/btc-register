@@ -78,7 +78,7 @@ echo ${password} | sudo -S unattended-upgrade -d
 # config file
 mkdir -p ${KIVY_HOME}
 if [[ ! -f ${KIVY_HOME}/config.ini ]]; then
-    cp ${BASE_DIR}/config/kivy_config.ini ~/.btc-register/kivy/config.ini
+    cp ${BASE_DIR}/config/kivy_default.ini ~/.btc-register/kivy/config.ini
 fi
 # startup
 tee -a ~/.profile << 'EOT'
