@@ -5,14 +5,19 @@ from run import APP_PATH
 
 class Config(ConfigParser):
 
-    def __init__(self, config_path, **kwargs):
+    def __init__(self, app_conf_path, **kwargs):
         super().__init__(**kwargs)
-        self._config_path = config_path
+
+        default_conf_path = APP_PATH + '/config/app_default.ini'
+        self._app_conf_path = app_conf_path
+        user_conf_path = '/boot/btc-register-config/settings.ini'
+
         self.read([
-            APP_PATH + '/config/app_default.ini',
-            self._config_path,
+            default_conf_path,
+            self._app_conf_path,
+            user_conf_path,
         ])
 
     def write(self, **kwargs):
-        with open(self._config_path, 'w') as configf_file:
-            super().write(configf_file, **kwargs)
+        with open(self._app_conf_path, 'w') as config_file:
+            super().write(config_file, **kwargs)
