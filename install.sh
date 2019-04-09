@@ -6,9 +6,9 @@ ENABLE_SSH=true
 KIVY_TAG=1.10.1
 KIVY_HOME='/home/pi/.btc-register/kivy'
 
-if [[ $(id -u) == 0 ]]
-  then echo "Don't run as root/sudo"
-  exit
+if [[ $(id -u) == 0 ]]; then
+    echo "Don't run as root/sudo"
+    exit 1
 fi
 
 # ${password}
