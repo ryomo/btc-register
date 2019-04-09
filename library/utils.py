@@ -14,7 +14,8 @@ class Utils:
     def change_backlight_state(enable_backlight: bool = True):
         """
         Turns backlight on.
-        Note: The bl_power file needs to be writable. `sudo chmod a+w /sys/class/backlight/rpi_backlight/bl_power`
+        Note1: The bl_power file needs to be writable. `sudo chmod a+w /sys/class/backlight/rpi_backlight/bl_power`
+        Note2: This method is not used anymore.
         :param enable_backlight:
         :return: Returns True if backlight is on, False if it is off. Returns None if error occured.
         """

@@ -35,8 +35,6 @@ def run():
         logger.warning('MAIN: KeyboardInterrupt')
 
     finally:
-        from library.utils import Utils
-        Utils.change_backlight_state(True)
         logger.info('MAIN: stop')
 
 

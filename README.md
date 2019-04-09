@@ -8,11 +8,11 @@ A cash register which also accepts Bitcoin Lightning Network payment.
 ## Requirements
 
 * LND node for Lightning Network payment
+    * v0.5.2-beta or newer
 * Raspberry Pi
 * Raspberry Pi Official Touch Display
 * (Optional) HDMI Display
 * Keyboard
-    * Needed to install this app. # TODO: Remove keyboard requirement.
 
 You needs your own LND node for now. It may be difficult, so I'm working on easier way to build a LND node. Or you may use Casa Node (I don't know it so much). 
 
@@ -30,7 +30,7 @@ cd btc-register/
 ./install.sh
 ```
 
-Wait 10~ minutes...
+Wait 30~ minutes...
 
 ### Initial settings
 

@@ -3,7 +3,7 @@ import codecs
 import json
 import logging
 import os
-from typing import Callable, List
+from typing import Callable, List, Optional
 
 import requests
 from requests import Response
@@ -28,8 +28,14 @@ class Lnd:
         """
         self._url = url + self.URL_SUFFIX
         self._cert_path = os.path.expanduser(cert_path)
-
         self._macaroon_path = os.path.expanduser(macaroon_path)
+
+        # Check if files exist.
+        if not os.path.isfile(self._cert_path):
+            raise LndException(LndException.FILE_NOT_FOUND, 'cert file not found')
+        if not os.path.isfile(self._macaroon_path):
+            raise LndException(LndException.FILE_NOT_FOUND, 'macaroon file not founx')
+
         with open(self._macaroon_path, 'rb') as f:
             macaroon = codecs.encode(f.read(), 'hex')
         self._headers = {'Grpc-Metadata-macaroon': macaroon}
@@ -203,9 +209,12 @@ class Lnd:
 class LndException(Exception):
     NOT_CONNECTED = 1
     NOT_UNLOCKED = 2
+    FILE_NOT_FOUND = 3
 
-    def __init__(self, reason):
+    def __init__(self, reason, message: Optional[str] = None):
         """
-        :param reason: NOT_CONNECTED, NOT_UNLOCKED
+        :param reason: NOT_CONNECTED, NOT_UNLOCKED, FILE_NOT_FOUND
+        :param message:
         """
         self.reason = reason
+        self.message = message

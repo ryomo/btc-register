@@ -5,7 +5,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import BooleanProperty, StringProperty, NumericProperty
 
-from api.lnd import Lnd
+from api.lnd import Lnd, LndException
 from controllers.main.main_screen_manager import MainScreenManager
 from library.config import Config
 from library.db import Db
@@ -50,7 +50,14 @@ class MainApp(App):
         c = self.app_config
         logger.debug('APP CONFIG: []'.format(self.app_config))
         if c.get('lnd', 'url') and c.get('lnd', 'cert_path') and c.get('lnd', 'macaroon_path'):
-            self.lnd = Lnd(c.get('lnd', 'url'), c.get('lnd', 'cert_path'), c.get('lnd', 'macaroon_path'))
+            try:
+                self.lnd = Lnd(c.get('lnd', 'url'), c.get('lnd', 'cert_path'), c.get('lnd', 'macaroon_path'))
+            except LndException as e:
+                if e.reason == LndException.FILE_NOT_FOUND:
+                    self.lnd = None
+                    logger.warning('LND: {}'.format(e.message))
+                else:
+                    raise e
         else:
             self.lnd = None
 

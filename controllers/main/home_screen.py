@@ -46,6 +46,7 @@ class HomeScreen(MainScreenBase):
             else:
                 self.message = self.app.messenger.warning('LND settings are not found.')
         except LndException as e:
+            self.app.lnd = None
             if e.reason == LndException.NOT_CONNECTED:
                 self.message = self.app.messenger.warning('LND is not connected.')
             elif e.reason == LndException.NOT_UNLOCKED:
