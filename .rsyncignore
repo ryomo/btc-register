@@ -1,0 +1,12 @@
++ .gitkeep
+
+- .git/
+- .idea/
+- .vagrant/
+- .virtualenv/
+- __pycache__/
+- logs/*
+- *.log
+- temp/
+- .backup/
+nohup.out
