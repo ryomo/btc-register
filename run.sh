@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-export APP_HOME="${HOME}/.btc-register"
-export KIVY_HOME="${HOME}/.btc-register/kivy"
+export APP_HOME='~/.btc-register'
+export KIVY_HOME='~/.btc-register/kivy'
 export KIVY_GL_BACKEND='gl'  # [issue #6007](https://github.com/kivy/kivy/issues/6007)
 
 BASE_DIR=$(cd $(dirname $0); pwd)

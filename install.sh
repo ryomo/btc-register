@@ -4,7 +4,8 @@ set -e
 
 ENABLE_SSH=true
 KIVY_TAG=1.10.1
-KIVY_HOME='/home/pi/.btc-register/kivy'
+APP_HOME='~/.btc-register'
+KIVY_HOME='~/.btc-register/kivy'
 
 if [[ $(id -u) == 0 ]]; then
     echo "Don't run as root/sudo"
@@ -76,9 +77,10 @@ echo ${password} | sudo -S unattended-upgrade -d
 
 # btc-register
 # config file
+mkdir -p ${APP_HOME}
 mkdir -p ${KIVY_HOME}
 if [[ ! -f ${KIVY_HOME}/config.ini ]]; then
-    cp ${BASE_DIR}/config/kivy_default.ini ~/.btc-register/kivy/config.ini
+    cp ${BASE_DIR}/config/kivy_default.ini ${KIVY_HOME}/config.ini
 fi
 # startup
 tee -a ~/.profile << 'EOT'
