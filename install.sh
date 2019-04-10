@@ -85,6 +85,10 @@ if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]; then
 fi
 EOT
 
+# sudo without password
+NOPASSWD_COMMAND='/sbin/shutdown'
+echo ${password} | sudo -S sh -c "echo 'pi ALL=NOPASSWD: ${NOPASSWD_COMMAND}' >> /etc/sudoers"
+
 # utils
 echo "alias ll='ls -alF'" >> ~/.bash_aliases
 

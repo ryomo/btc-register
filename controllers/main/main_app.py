@@ -146,3 +146,10 @@ class MainApp(App):
         """
         open(APP_HOME + '/.restart', 'w').close()
         self.stop()
+
+    def shutdown(self):
+        """
+        Exit this app and shutdown Raspberry Pi. See `run.sh`.
+        """
+        open(APP_HOME + '/.shutdown', 'w').close()
+        self.stop()
