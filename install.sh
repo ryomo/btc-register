@@ -36,7 +36,7 @@ pip3 install --user Cython==0.28.2
 pip3 install --user git+https://github.com/kivy/kivy.git@${KIVY_TAG}
 
 # pip
-pip3 install --user requests
+pip3 install --user requests==2.21.0
 
 # Some of pip packages does not work with arm.
 echo ${password} | sudo -S apt-get install -y python3-qrcode python3-pil
