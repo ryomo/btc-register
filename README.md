@@ -1,3 +1,5 @@
+[English] [[日本語]](README.ja.md)
+
 # btc-register[WIP]
 
 ## What is this ?
