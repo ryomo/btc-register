@@ -41,10 +41,10 @@
             screen: 'setting'
             on_release: dropdown.select(self.screen)
         Button:
-            text: 'Display OFF'
+            text: 'Power Off'
             size_hint_y: None
             height: 48
-            on_release: dropdown.dismiss(); app.screen_manager.disable_backlight()
+            on_release: dropdown.dismiss(); app.shutdown()
 
 
 <ChangeScreenButton@Button>:
