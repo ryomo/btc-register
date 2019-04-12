@@ -40,7 +40,7 @@ class HomeScreen(MainScreenBase):
         super().on_enter(*args)
 
         # Check if LND is available.
-        # TODO: Below codes do not work with invoice.macaroon. Need some workaround...
+        # TODO: The following codes do not work with invoice.macaroon. Need some workaround...
         # try:
         #     if self.app.lnd:
         #         self.app.lnd.getinfo()
