@@ -36,7 +36,7 @@ class MainApp(App):
         self._pipe = pipe  # Inter process connection to send some data.
 
         self.screen_manager = ...  # type: MainScreenManager
-        self.app_config = app_config
+        self.app_config = app_config  # type: Config
         self.db = ...  # type: Db
         self.lnd = ...  # type: Lnd
         self.messenger = ...  # type: Messenger
