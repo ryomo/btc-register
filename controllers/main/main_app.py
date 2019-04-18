@@ -40,6 +40,7 @@ class MainApp(App):
         self.db = ...  # type: Db
         self.lnd = ...  # type: Lnd
         self.messenger = ...  # type: Messenger
+        self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
         self.exchange = ...  # type: Exchange
         self.fiat = ...  # type: Fiat
 
@@ -62,6 +63,7 @@ class MainApp(App):
             self.lnd = None
 
         self.messenger = Messenger(self.app_config.get('app', 'lang'))
+        self.m = self.messenger.get_text
 
         self.fiat = Fiat(self.app_config.get('app', 'fiat'))
 

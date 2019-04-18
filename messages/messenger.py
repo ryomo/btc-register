@@ -1,16 +1,33 @@
-# TODO: i18n
+from importlib import import_module
+
+from messages.messages_en import messages as default_messages
 
 
 class Messenger:
+    DEFAULT_LANG = 'en'
 
     def __init__(self, lang='en'):
-        self.lang = lang
+        if lang == self.DEFAULT_LANG:
+            self.messages = default_messages
+        else:
+            # Import `messages` module dynamically.
+            messages_module = import_module('messages.messages_{}'.format(lang))
+            messages = getattr(messages_module, 'messages')
 
-    def info(self, text):
-        return text
+            # Merge dicts
+            self.messages = {
+                **default_messages,
+                **messages,
+            }
 
-    def warning(self, text):
-        return '[color=ffff33]WARNING:[/color] {}'.format(text)
+    def get_text(self, key: str) -> str:
+        return self.messages[key]
 
-    def error(self, text):
-        return '[b][color=ff3333]ERROR:[/color] {}[/b]'.format(text)
+    def info(self, key):
+        return self.get_text(key)
+
+    def warning(self, key):
+        return '[color=ffff33]WARNING:[/color] {}'.format(self.get_text(key))
+
+    def error(self, key):
+        return '[b][color=ff3333]ERROR:[/color] {}[/b]'.format(self.get_text(key))
