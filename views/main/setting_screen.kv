@@ -70,10 +70,10 @@
                     height: 48
                     LabelSection:
                         size_hint_x: 1
-                        text: '[shop]'
+                        text: '[app]'
                     LabelOption:
                         size_hint_x: 2
-                        text: 'name'
+                        text: 'shop_name'
                     TextInputValue:
                         size_hint_x: 7
                         text: root.shop_name
@@ -81,9 +81,14 @@
                 BoxLayout:
                     size_hint_y: None
                     height: 48 * 3
-                    LabelSection:
+                    BoxLayout:
                         size_hint_x: 1
-                        text: '[lnd]'
+                        orientation: 'vertical'
+                        LabelSection:
+                            size_hint_y: 1
+                            text: '[lnd]'
+                        Widget:
+                            size_hint_y: 2
 
                     BoxLayout:
                         size_hint_x: 9
