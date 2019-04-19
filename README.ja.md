@@ -15,7 +15,7 @@ BitcoinのLightning Networkでの支払いを受け付けるレジアプリで�
 * Raspberry Pi
     * 3b or better
     * [link](https://raspberry-pi.ksyic.com/main/index/pdp.id/435/pdp.open/435)
-* Raspberry Pi
+* Raspberry Pi 公式7インチタッチディスプレイ
     * [link](https://raspberry-pi.ksyic.com/main/index/pdp.id/101/pdp.open/101) 
 * (Optional) HDMI Display
 * Keyboard
