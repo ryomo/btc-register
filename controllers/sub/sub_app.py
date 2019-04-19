@@ -11,6 +11,7 @@ from kivy.uix.screenmanager import NoTransition
 from controllers.sub.sub_screen_manager import SubScreenManager
 from library.config import Config
 from library.fiat import Fiat
+from messages.messenger import Messenger
 from run import APP_PATH
 
 DEBUG_SCREEN = None
@@ -32,7 +33,9 @@ class SubApp(App):
         """Data sent from main process."""
 
         self.screen_manager = ...  # type: SubScreenManager
-        self.app_config = app_config
+        self.app_config = app_config  # type: Config
+        self.messenger = ...  # type: Messenger
+        self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
         self.fiat = ...  # type: Fiat
 
     def build(self):
@@ -47,6 +50,9 @@ class SubApp(App):
 
         thread = Thread(target=receive_pipe, args=(self._pipe,))
         thread.start()
+
+        self.messenger = Messenger(self.app_config.get('app', 'lang'))
+        self.m = self.messenger.get_text
 
         self.fiat = Fiat(self.app_config.get('app', 'fiat'))
 

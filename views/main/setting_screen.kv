@@ -1,4 +1,5 @@
 <SettingScreen>:
+    lang_spinner: lang_spinner
     exchange_spinner: exchange_spinner
 
     canvas.before:
@@ -39,22 +40,25 @@
                     size_hint_y: None
                     height: 48
                     LabelSection:
-                        size_hint_x: 1
-                        text: '[btc]'
+                        size_hint_x: 3
+                        text: app.m('language')
+                    Spinner:
+                        size_hint_x: 7
+                        id: lang_spinner
+                        values: root.langs
+                        on_text: root.select_lang_spinner(self.text)
 
-                    BoxLayout:
-                        size_hint_x: 9
-                        orientation: 'vertical'
-                        spacing: 5
-                        BoxLayout:
-                            LabelOption:
-                                size_hint_x: 2
-                                text: 'price'
-                            Spinner:
-                                size_hint_x: 7
-                                id: exchange_spinner
-                                values: root.exchanges
-                                on_text: root.select_exchange_spinner(self.text)
+                BoxLayout:
+                    size_hint_y: None
+                    height: 48
+                    LabelSection:
+                        size_hint_x: 3
+                        text: app.m('price_reference_exchange')
+                    Spinner:
+                        size_hint_x: 7
+                        id: exchange_spinner
+                        values: root.exchanges
+                        on_text: root.select_exchange_spinner(self.text)
 
                 Widget:
                     size_hint_y: None
@@ -63,17 +67,17 @@
                 Label:
                     size_hint_y: None
                     height: 48
-                    text: 'Below settings are read only. You needs to edit `/boot/btc-register-config/config.ini`.'
+                    text: app.m('readonly_settings')
 
                 BoxLayout:
                     size_hint_y: None
                     height: 48
                     LabelSection:
                         size_hint_x: 1
-                        text: '[shop]'
-                    LabelOption:
+                        text: '[app]'
+                    LabelSection:
                         size_hint_x: 2
-                        text: 'name'
+                        text: 'shop_name'
                     TextInputValue:
                         size_hint_x: 7
                         text: root.shop_name
@@ -81,30 +85,35 @@
                 BoxLayout:
                     size_hint_y: None
                     height: 48 * 3
-                    LabelSection:
+                    BoxLayout:
                         size_hint_x: 1
-                        text: '[lnd]'
+                        orientation: 'vertical'
+                        LabelSection:
+                            size_hint_y: 1
+                            text: '[lnd]'
+                        Widget:
+                            size_hint_y: 2
 
                     BoxLayout:
                         size_hint_x: 9
                         orientation: 'vertical'
                         spacing: 5
                         BoxLayout:
-                            LabelOption:
+                            LabelSection:
                                 size_hint_x: 2
                                 text: 'url'
                             TextInputValue:
                                 size_hint_x: 7
                                 text: root.lnd_url
                         BoxLayout:
-                            LabelOption:
+                            LabelSection:
                                 size_hint_x: 2
                                 text: 'cert_path'
                             TextInputValue:
                                 size_hint_x: 7
                                 text: root.lnd_cert_path
                         BoxLayout:
-                            LabelOption:
+                            LabelSection:
                                 size_hint_x: 2
                                 text: 'macaroon_path'
                             TextInputValue:
@@ -118,14 +127,10 @@
                 size_hint_x: 8
             Button:
                 size_hint_x: 2
-                text: 'Save and Restart'
+                text: app.m('save_and_restart')
                 on_release: root.save_and_restart()
 
 <LabelSection@Label>
-    markup: True
-    font_size: 20
-
-<LabelOption@Label>
     markup: True
     font_size: 20
 

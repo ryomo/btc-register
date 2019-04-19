@@ -71,7 +71,7 @@ class WaitLndScreen(MainScreenBase):
                     })
                     # validate
                     if not payment.validate() or not payment_btc.validate():
-                        self.message = self.app.messenger.error('Invalid payment.')
+                        self.message = self.app.messenger.error(self.app.m('invalid_payment_lnd'))
                         logger.warning('PAYMENT LND: payment.__dict__ = {}'.format(payment.__dict__))
                         logger.warning('PAYMENT LND: payment_btc.__dict__ = {}'.format(payment_btc.__dict__))
                         return

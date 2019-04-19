@@ -40,18 +40,18 @@ class HomeScreen(MainScreenBase):
         super().on_enter(*args)
 
         # Check if LND is available.
-        # TODO: Below codes do not work with invoice.macaroon. Need some workaround...
+        # TODO: The following codes do not work with invoice.macaroon. Need some workaround...
         # try:
         #     if self.app.lnd:
         #         self.app.lnd.getinfo()
         #     else:
-        #         self.message = self.app.messenger.warning('LND is unavailable.')
+        #         self.message = self.app.messenger.warning('lnd_unavailable')
         # except LndException as e:
         #     self.app.lnd = None
         #     if e.reason == LndException.NOT_CONNECTED:
-        #         self.message = self.app.messenger.warning('LND is not connected.')
+        #         self.message = self.app.messenger.warning('lnd_not_connected')
         #     elif e.reason == LndException.NOT_UNLOCKED:
-        #         self.message = self.app.messenger.warning('LND is not unlocked.')
+        #         self.message = self.app.messenger.warning('lnd_not_unlocked')
 
     def on_leave(self, *args):
         super().on_leave(*args)
@@ -79,7 +79,7 @@ class HomeScreen(MainScreenBase):
 
     def popup_payment_method(self):
         if self.payment_amount == 0:
-            self.message = self.app.messenger.warning('Nothing to pay')
+            self.message = self.app.messenger.warning('payment_amount_zero')
             return
 
         PaymentMethodPopup().open(self.payment_amount)
@@ -150,7 +150,7 @@ class NumPadInput(NumPad):
         number_display = self.number_display.rstrip('.')
 
         if not number_display:
-            self.screen.message = self.app.messenger.warning('No fiat inputted.')
+            self.screen.message = self.app.messenger.warning('payment_not_entered')
             return
 
         item_price = self.app.fiat.dollar_str_to_cent(number_display)  # type: int  # In cents
@@ -178,13 +178,13 @@ class PaymentMethodPopup(Popup):
         grid_layout.cols = 3
 
         grid_layout.add_widget(Button(
-            text='Fiat',
+            text=self.app.m('fiat_button'),
             on_release=lambda x: self.push_fiat_payment_button(payment_amount),
         ))
 
         if self.app.lnd:
             grid_layout.add_widget(Button(
-                text='BTC\n(Lihgtning Network)',
+                text=self.app.m('lightning_payment_button'),
                 on_release=lambda x: self.push_lightning_payment_button(payment_amount),
             ))
         else:
@@ -230,7 +230,7 @@ class PaymentMethodPopup(Popup):
 
         # Make a lnd invoice
         if not lnd:
-            screen.message = self.app.messenger.error('Unable to create a LND invoice.')
+            screen.message = self.app.messenger.error('lnd_invalid_conf')
             self.dismiss()
             return
         try:
@@ -241,7 +241,7 @@ class PaymentMethodPopup(Popup):
             )
         except LndException as e:
             logger.warning(e.args)
-            screen.message = self.app.messenger.error('Unable to create a LND invoice.')
+            screen.message = self.app.messenger.error('lnd_unable_create_invo')
             self.dismiss()
             return
 

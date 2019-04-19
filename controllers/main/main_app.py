@@ -36,10 +36,11 @@ class MainApp(App):
         self._pipe = pipe  # Inter process connection to send some data.
 
         self.screen_manager = ...  # type: MainScreenManager
-        self.app_config = app_config
+        self.app_config = app_config  # type: Config
         self.db = ...  # type: Db
         self.lnd = ...  # type: Lnd
         self.messenger = ...  # type: Messenger
+        self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
         self.exchange = ...  # type: Exchange
         self.fiat = ...  # type: Fiat
 
@@ -62,6 +63,7 @@ class MainApp(App):
             self.lnd = None
 
         self.messenger = Messenger(self.app_config.get('app', 'lang'))
+        self.m = self.messenger.get_text
 
         self.fiat = Fiat(self.app_config.get('app', 'fiat'))
 

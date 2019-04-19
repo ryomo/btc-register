@@ -59,15 +59,15 @@
                     pos: self.pos
             Label:
                 size_hint_x: .5
-                text: 'ID'
+                text: app.m('history_list_id')
             Label:
-                text: 'Type'
+                text: app.m('history_list_method')
             Label:
-                text: 'Fiat'
+                text: app.m('history_list_amount')
             Label:
-                text: 'Crypto'
+                text: app.m('history_list_btc')
             Label:
-                text: 'Date'
+                text: app.m('history_list_date')
 
         BoxLayout:
             size_hint_y: 7.5
@@ -119,7 +119,7 @@
 
         Button:
             size_hint_y: 1
-            text: 'close'
+            text: app.m('close_button')
             on_release: root.dismiss()
 
 

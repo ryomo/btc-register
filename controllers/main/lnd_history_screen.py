@@ -44,11 +44,11 @@ class LndHistoryScreen(MainScreenBase):
             index_and_invoices = self.app.lnd.get_invoices(index_offset, 20, self.sort_reversed)
         except LndException as e:
             logger.warning(e.args)
-            self.message = self.app.messenger.warning('Unable to load invoices from LND.')
+            self.message = self.app.messenger.warning(self.app.m('lnd_invoice_unavailable'))
             return
 
         if not index_and_invoices:
-            self.message = self.app.messenger.warning('Invoice not found.')
+            self.message = self.app.messenger.warning(self.app.m('lnd_invoice_not_found'))
             return
         self.first_index_offset, self.last_index_offset, tmp_invoices = index_and_invoices
 
