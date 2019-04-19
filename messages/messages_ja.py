@@ -75,4 +75,13 @@ messages = {
 
     # wait_lnd_screen.py
     'invalid_payment_lnd': '無効な支払です。',
+
+    #
+    # sub
+    #
+
+    # fiat_screen.kv
+    'sub_fiat_screen_total': '合計',
+    'sub_fiat_screen_paid': 'お受取り',
+    'sub_fiat_screen_change': 'お返し',
 }

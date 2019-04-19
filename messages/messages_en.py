@@ -75,4 +75,13 @@ messages = {
 
     # wait_lnd_screen.py
     'invalid_payment_lnd': 'Invalid payment.',
+
+    #
+    # sub
+    #
+
+    # fiat_screen.kv
+    'sub_fiat_screen_total': 'Total',
+    'sub_fiat_screen_paid': 'Paid',
+    'sub_fiat_screen_change': 'Change',
 }
