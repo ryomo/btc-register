@@ -47,7 +47,7 @@ class WaitFiatScreen(MainScreenBase):
         })
         # validate
         if not payment.validate() or not payment_fiat.validate():
-            self.message = self.app.messenger.error('Invalid payment.')
+            self.message = self.app.messenger.error('invalid_payment_fiat')
             logger.warning('PAYMENT FIAT: payment.__dict__ = {}'.format(payment.__dict__))
             logger.warning('PAYMENT FIAT: payment_fiat.__dict__ = {}'.format(payment_fiat.__dict__))
             return
@@ -67,7 +67,7 @@ class NumPadChange(NumPad):
         number_display = self.number_display.rstrip('.')  # type: str  # In dollars
 
         if not number_display:
-            self.screen.message = self.app.messenger.warning('Not inputted.')
+            self.screen.message = self.app.messenger.warning('amount_not_inputted')
             return
 
         self.screen.payment_paid = self.app.fiat.dollar_str_to_cent(number_display)

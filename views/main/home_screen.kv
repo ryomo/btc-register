@@ -44,7 +44,7 @@
 
                     Button:
                         size_hint_x: 2
-                        text: 'Clear'
+                        text: app.m('clear_button')
                         on_release: root.clear_inputted_data()
 
                     BoxLayout:
@@ -147,7 +147,7 @@
 
 <PaymentMethodPopup>:
     size_hint: .8, .8
-    title: 'Select payment method'
+    title: app.m('select_payment_method')
 
     BoxLayout:
         orientation: 'vertical'
@@ -161,5 +161,5 @@
 
         Button:
             size_hint_y: 1
-            text: 'close'
+            text: app.m('close_button')
             on_release: root.dismiss()

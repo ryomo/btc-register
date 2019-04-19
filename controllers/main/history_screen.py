@@ -7,6 +7,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 
+from controllers.main.main_app import MainApp
 from library.fiat import Fiat
 from library.utils import Utils
 from controllers.main.main_screen_base import MainScreenBase
@@ -44,15 +45,22 @@ class HistoryScreen(MainScreenBase):
 
         payment_rows = PaymentModel.find_rows_for_pagination(offset, self.PAGE_ITEM_NUM, self.sort_reversed)
         if not payment_rows:
-            self.message = self.app.messenger.warning('Payment data not found.')
+            self.message = self.app.messenger.warning('payment_not_found')
             return
 
         self.payments = []
         for payment_row in payment_rows:
             payment_btc_satoshi = payment_row['payment_btc_satoshi']
+            payment_method = PaymentMethod(payment_row['method'])
+            if payment_method == PaymentMethod.FIAT:
+                payment_method_name = self.app.m('payment_method_fiat')
+            elif payment_method == PaymentMethod.LND:
+                payment_method_name = self.app.m('payment_method_lnd')
+            else:
+                raise ValueError
             self.payments.append({
                 'payment_id': payment_row['id'],
-                'method': PaymentMethod(payment_row['method']).name,
+                'method': payment_method_name,
                 'amount': payment_row['amount'],
                 'created_at': Utils.timestamp_to_strftime(payment_row['created_at']),
                 'btc': Utils.satoshi_to_btc(payment_btc_satoshi),
@@ -109,6 +117,10 @@ class PaymentHistoryRow(BoxLayout, Button):
 
 class PaymentDetailPopup(Popup):
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.app = App.get_running_app()  # type: MainApp
+
     def open(self, *largs, **kwargs):
         payment_row = largs[0]
         logger.debug('PaymentDetailPopup: payment_row = {}'.format(payment_row))
@@ -126,16 +138,17 @@ class PaymentDetailPopup(Popup):
 
         self.title = '[{}] ({})'.format(payment_method.name, payment_date)
 
-        add_row('ID', '{:,}'.format(payment_row['id']))
-        add_row('Date', payment_date)
-        add_row('Method', payment_method.name)
+        add_row(self.app.m('payment_detail_id'), '{:,}'.format(payment_row['id']))
+        add_row(self.app.m('payment_detail_date'), payment_date)
         if payment_method == PaymentMethod.FIAT:
-            add_row('Total', '{} {:,}'.format(fiat.mark, payment_row['amount']))
-            add_row('Paid', '{} {:,}'.format(fiat.mark, payment_row['payment_fiat_paid']))
-            add_row('Change', '{} {:,}'.format(fiat.mark, payment_row['payment_fiat_change']))
+            add_row(self.app.m('payment_detail_method'), self.app.m('payment_method_fiat'))
+            add_row(self.app.m('payment_detail_total'), '{} {:,}'.format(fiat.mark, payment_row['amount']))
+            add_row(self.app.m('payment_detail_paid'), '{} {:,}'.format(fiat.mark, payment_row['payment_fiat_paid']))
+            add_row(self.app.m('payment_detail_change'), '{} {:,}'.format(fiat.mark, payment_row['payment_fiat_change']))
         elif payment_method == PaymentMethod.LND:
-            add_row('Amount', '{} {:,}'.format(fiat.mark, payment_row['amount']))
-            add_row('BTC', '{:,} BTC'.format(Utils.satoshi_to_btc(payment_btc_satoshi)))
+            add_row(self.app.m('payment_detail_method'), self.app.m('payment_method_lnd'))
+            add_row(self.app.m('payment_detail_amount'), '{} {:,}'.format(fiat.mark, payment_row['amount']))
+            add_row(self.app.m('payment_detail_btc'), '{:,} BTC'.format(Utils.satoshi_to_btc(payment_btc_satoshi)))
         else:
             raise ValueError
 

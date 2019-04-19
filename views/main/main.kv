@@ -25,23 +25,23 @@
         id: dropdown
         on_select: app.screen_manager.load_screen(args[1])
         ChangeScreenButton:
-            text: 'Home'
+            text: app.m('home')
             screen: 'home'
             on_release: dropdown.select(self.screen)
         ChangeScreenButton:
-            text: 'History'
+            text: app.m('history')
             screen: 'history'
             on_release: dropdown.select(self.screen)
         ChangeScreenButton:
-            text: 'LND\nHistory'
+            text: app.m('lnd_history')
             screen: 'lnd_history'
             on_release: dropdown.select(self.screen)
         ChangeScreenButton:
-            text: 'Setting'
+            text: app.m('setting')
             screen: 'setting'
             on_release: dropdown.select(self.screen)
         Button:
-            text: 'Power Off'
+            text: app.m('shutdown')
             size_hint_y: None
             height: 48
             on_release: dropdown.dismiss(); app.shutdown()
