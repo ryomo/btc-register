@@ -40,43 +40,25 @@
                     size_hint_y: None
                     height: 48
                     LabelSection:
-                        size_hint_x: 1
-                        text: '[app]'
-
-                    BoxLayout:
-                        size_hint_x: 9
-                        orientation: 'vertical'
-                        spacing: 5
-                        BoxLayout:
-                            LabelOption:
-                                size_hint_x: 2
-                                text: 'lang'
-                            Spinner:
-                                size_hint_x: 7
-                                id: lang_spinner
-                                values: root.langs
-                                on_text: root.select_lang_spinner(self.text)
+                        size_hint_x: 3
+                        text: 'lang'
+                    Spinner:
+                        size_hint_x: 7
+                        id: lang_spinner
+                        values: root.langs
+                        on_text: root.select_lang_spinner(self.text)
 
                 BoxLayout:
                     size_hint_y: None
                     height: 48
                     LabelSection:
-                        size_hint_x: 1
-                        text: '[btc]'
-
-                    BoxLayout:
-                        size_hint_x: 9
-                        orientation: 'vertical'
-                        spacing: 5
-                        BoxLayout:
-                            LabelOption:
-                                size_hint_x: 2
-                                text: 'price'
-                            Spinner:
-                                size_hint_x: 7
-                                id: exchange_spinner
-                                values: root.exchanges
-                                on_text: root.select_exchange_spinner(self.text)
+                        size_hint_x: 3
+                        text: 'price'
+                    Spinner:
+                        size_hint_x: 7
+                        id: exchange_spinner
+                        values: root.exchanges
+                        on_text: root.select_exchange_spinner(self.text)
 
                 Widget:
                     size_hint_y: None
@@ -93,7 +75,7 @@
                     LabelSection:
                         size_hint_x: 1
                         text: '[app]'
-                    LabelOption:
+                    LabelSection:
                         size_hint_x: 2
                         text: 'shop_name'
                     TextInputValue:
@@ -117,21 +99,21 @@
                         orientation: 'vertical'
                         spacing: 5
                         BoxLayout:
-                            LabelOption:
+                            LabelSection:
                                 size_hint_x: 2
                                 text: 'url'
                             TextInputValue:
                                 size_hint_x: 7
                                 text: root.lnd_url
                         BoxLayout:
-                            LabelOption:
+                            LabelSection:
                                 size_hint_x: 2
                                 text: 'cert_path'
                             TextInputValue:
                                 size_hint_x: 7
                                 text: root.lnd_cert_path
                         BoxLayout:
-                            LabelOption:
+                            LabelSection:
                                 size_hint_x: 2
                                 text: 'macaroon_path'
                             TextInputValue:
@@ -149,10 +131,6 @@
                 on_release: root.save_and_restart()
 
 <LabelSection@Label>
-    markup: True
-    font_size: 20
-
-<LabelOption@Label>
     markup: True
     font_size: 20
 
