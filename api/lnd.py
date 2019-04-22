@@ -114,7 +114,7 @@ class Lnd:
         logger.info('LND: add_invoice: {}'.format(result))
         return result['r_hash'], int(result['add_index']), result['payment_request']
 
-    def get_invoices(self, index_offset: int = None, num_max_invoices: int = None, reverse: bool = True, **kwargs)\
+    def get_invoices(self, index_offset: int = None, num_max_invoices: int = None, reverse: bool = True, **kwargs) \
             -> (int, int, List[dict]):
         """
         :param index_offset:

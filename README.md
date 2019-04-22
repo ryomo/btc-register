@@ -35,7 +35,7 @@ A register which accepts Bitcoin Lightning Network payment.
     [lnd]
     url = https://{your-lnd-node}:{port}
     ```
-   
+
     * Do not add `{}`
 
 4. Put LND's `tls.cert` and `invoice.macaroon` in the `btc-register-config` folder.
