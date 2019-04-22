@@ -25,7 +25,7 @@ class Db:
         self.db_path = db_path
         self.migration(schema_dir)
 
-    def execute(self, callback: Callable[[Cursor], None], fetch: Fetch = Fetch.NONE)\
+    def execute(self, callback: Callable[[Cursor], None], fetch: Fetch = Fetch.NONE) \
             -> Union[sqlite3.Row, List[sqlite3.Row], None]:
         """
         :param callback:
@@ -35,6 +35,7 @@ class Db:
         with closing(sqlite3.connect(self.db_path)) as connection:
             def sql_trace_callback(raw_sql):
                 logger.debug('SQL: {}'.format(raw_sql))
+
             connection.set_trace_callback(sql_trace_callback)
 
             connection.row_factory = sqlite3.Row  # https://docs.python.org/3/library/sqlite3.html#row-objects
@@ -57,6 +58,7 @@ class Db:
         :param fetch:
         :return:
         """
+
         def callback(cursor: Cursor):
             if params:
                 cursor.execute(sql, params)
@@ -78,7 +80,7 @@ class Db:
         if self.SCHEMA_VERSION_NEW == schema_version_now:
             return
 
-        for version in range(schema_version_now+1, self.SCHEMA_VERSION_NEW+1):
+        for version in range(schema_version_now + 1, self.SCHEMA_VERSION_NEW + 1):
             logger.info('MIGRATION: Schema version: now = {}, new = {}'
                         .format(schema_version_now, self.SCHEMA_VERSION_NEW))
             self._execute_schema(schema_dir, version)
@@ -122,4 +124,4 @@ if __name__ == '__main__':
     path = os.path.realpath(__file__)
     dir_path = os.path.dirname(path)
     print(dir_path)
-    db = Db(dir_path+'/../../database.db', dir_path+'/../schemas/')
+    db = Db(dir_path + '/../../database.db', dir_path + '/../schemas/')

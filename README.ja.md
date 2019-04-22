@@ -26,7 +26,7 @@ BitcoinのLightning Networkでの支払いを受け付けるレジアプリで�
 ## インストール
 
 1. [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/)をmicro sdカードに焼く。
-    
+
     * [Etcher](https://www.balena.io/etcher/)などの使用を推奨。
 
 2. 公式ディスプレイを上下逆さまで使う場合は、`boot`パーティションの`config.txt`の末尾に`lcd_rotate=2`を記載する。
@@ -42,7 +42,7 @@ BitcoinのLightning Networkでの支払いを受け付けるレジアプリで�
     [lnd]
     url = https://{LNDノードのアドレス}:{ポート番号}
     ```
-   
+
     * `{}`は付けない。
 
 4. LNDの`tls.cert`・`invoice.macaroon`を、同じ`btc-register-config`フォルダに入れる。

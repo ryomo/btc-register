@@ -8,9 +8,9 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 
 from controllers.main.main_app import MainApp
+from controllers.main.main_screen_base import MainScreenBase
 from library.fiat import Fiat
 from library.utils import Utils
-from controllers.main.main_screen_base import MainScreenBase
 from models.payment_model import PaymentModel, PaymentMethod
 
 logger = logging.getLogger(__name__)
@@ -144,7 +144,8 @@ class PaymentDetailPopup(Popup):
             add_row(self.app.m('payment_detail_method'), self.app.m('payment_method_fiat'))
             add_row(self.app.m('payment_detail_total'), '{} {:,}'.format(fiat.mark, payment_row['amount']))
             add_row(self.app.m('payment_detail_paid'), '{} {:,}'.format(fiat.mark, payment_row['payment_fiat_paid']))
-            add_row(self.app.m('payment_detail_change'), '{} {:,}'.format(fiat.mark, payment_row['payment_fiat_change']))
+            add_row(self.app.m('payment_detail_change'),
+                    '{} {:,}'.format(fiat.mark, payment_row['payment_fiat_change']))
         elif payment_method == PaymentMethod.LND:
             add_row(self.app.m('payment_detail_method'), self.app.m('payment_method_lnd'))
             add_row(self.app.m('payment_detail_amount'), '{} {:,}'.format(fiat.mark, payment_row['amount']))

@@ -46,8 +46,8 @@ class Utils:
         :param text:
         :return:
         """
-        text = str(text)\
-            .replace('\n', '\\n')\
+        text = str(text) \
+            .replace('\n', '\\n') \
             .replace('\r', '\\r')
         return text
 

@@ -6,8 +6,8 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 
 from api.lnd import LndException
-from library.utils import Utils
 from controllers.main.main_screen_base import MainScreenBase
+from library.utils import Utils
 
 logger = logging.getLogger(__name__)
 

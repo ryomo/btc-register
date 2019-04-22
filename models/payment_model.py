@@ -168,7 +168,8 @@ class PaymentModel(ModelBase):
         return row
 
     @classmethod
-    def find_rows_for_pagination(cls, offset: int = None, max_rows: int = None, reverse: bool = True) -> List[sqlite3.Row]:
+    def find_rows_for_pagination(cls, offset: int = None, max_rows: int = None, reverse: bool = True) \
+            -> List[sqlite3.Row]:
         """
         e.g.)
         payment_rows = PaymentModel.find_rows_for_pagination(0, 20, True)
