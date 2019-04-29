@@ -1,7 +1,12 @@
+# app
 *.log
 .secret
 .backup/
 
+# python
+__pycache__/
+
+# editor, ide
 .idea/
 *.iml
 
