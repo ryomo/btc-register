@@ -30,7 +30,7 @@ class TestLnd(TestCase):
         self.assertIsNotNone(self.lnd.getinfo())
 
     def test_add_invoice_and_subscribe_invoices(self):
-        invoice_memo = '[{}] test'.format(datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S'))
+        invoice_memo = '[{}] test'.format(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         json_data = None
 
         def callback(stream_response: Response):

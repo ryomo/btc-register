@@ -29,14 +29,14 @@ class Utils:
             return None
 
     @staticmethod
-    def timestamp_to_strftime(timestamp, datetime_format='%Y/%m/%d %H:%M') -> str:
+    def timestamp_to_strftime(timestamp, datetime_format='%Y-%m-%d %H:%M') -> str:
         if not timestamp:
             return ''
         dt = datetime.datetime.fromtimestamp(float(timestamp))
         return dt.strftime(datetime_format)
 
     @staticmethod
-    def get_strftime(datetime_format='%Y/%m/%d %H:%M'):
+    def get_strftime(datetime_format='%Y-%m-%d %H:%M'):
         return datetime.datetime.now().strftime(datetime_format)
 
     @staticmethod
