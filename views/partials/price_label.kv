@@ -2,9 +2,9 @@
 
 <PriceLabel@Label>:
     btcprice: 0
-    btcprice_date: ''
+    btcprice_time: ''
 
     font_size: 50
-    text: '{} {:,} BTC{}[size={}]\n ({}) [/size]'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.btcprice), app.fiat.name, int(self.font_size/2), self.btcprice_date)
+    text: '{} {:,} BTC{}[size={}]\n ({}) [/size]'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.btcprice), app.fiat.name, int(self.font_size/2), self.btcprice_time)
     halign: 'right'
     markup: True

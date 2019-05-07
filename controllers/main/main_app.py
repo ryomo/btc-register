@@ -27,7 +27,7 @@ class MainApp(App):
     kv_file = APP_PATH + '/views/main/main.kv'
 
     btcprice = NumericProperty(0)  # type: int  # In cents
-    btcprice_date = StringProperty()  # YYYY/MM/DD
+    btcprice_time = StringProperty()  # HH:MM
 
     enable_update_btcdata = BooleanProperty(True)  # type: BooleanProperty
 
@@ -94,7 +94,7 @@ class MainApp(App):
             ))
             self.send_data_to_subproc('screen', 'qr')
             self.send_data_to_subproc('payment',
-                                      (390000, '2019/03/13', 100000, 390, payment_request))
+                                      (390000, '14:23', 100000, 390, payment_request))
 
         elif screen_name == 'wait_fiat':
             payment_fiat = 1500
@@ -111,15 +111,15 @@ class MainApp(App):
             return
         try:
             self.btcprice = self.exchange.fetch_btc_price()
-            self.btcprice_date = Utils.get_strftime('%H:%M')
+            self.btcprice_time = Utils.get_strftime('%H:%M')
 
-            self.send_data_to_subproc('btcdata', (self.btcprice, self.btcprice_date))
+            self.send_data_to_subproc('btcdata', (self.btcprice, self.btcprice_time))
 
-            # Updates screen's btcprice and btcprice_date.
+            # Updates screen's btcprice and btcprice_time.
             if hasattr(self.screen_manager.current_screen, 'btcprice'):
                 self.screen_manager.current_screen.btcprice = self.btcprice
-            if hasattr(self.screen_manager.current_screen, 'btcprice_date'):
-                self.screen_manager.current_screen.btcprice_date = self.btcprice_date
+            if hasattr(self.screen_manager.current_screen, 'btcprice_time'):
+                self.screen_manager.current_screen.btcprice_time = self.btcprice_time
 
         except ExchangeException as e:
             logger.exception(e)

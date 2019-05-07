@@ -24,7 +24,7 @@ class SubApp(App):
     kv_file = APP_PATH + '/views/sub/sub.kv'
 
     btcprice = NumericProperty(0)  # type: int  # In cents
-    btcprice_date = StringProperty()  # YYYY/MM/DD
+    btcprice_time = StringProperty()  # HH:MM
 
     def __init__(self, pipe, app_config: Config, **kwargs):
         super().__init__(**kwargs)
@@ -71,13 +71,13 @@ class SubApp(App):
         btcdata = self.receive_data_from_mainproc('btcdata')
         if btcdata:
             self.btcprice = btcdata[0]
-            self.btcprice_date = btcdata[1]
+            self.btcprice_time = btcdata[1]
 
-            # Updates screen's btcprice and btcprice_date.
+            # Updates screen's btcprice and btcprice_time.
             if hasattr(self.screen_manager.current_screen, 'btcprice'):
                 self.screen_manager.current_screen.btcprice = self.btcprice
-            if hasattr(self.screen_manager.current_screen, 'btcprice_date'):
-                self.screen_manager.current_screen.btcprice_date = self.btcprice_date
+            if hasattr(self.screen_manager.current_screen, 'btcprice_time'):
+                self.screen_manager.current_screen.btcprice_time = self.btcprice_time
 
     def receive_data_from_mainproc(self, key):
         """

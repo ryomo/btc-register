@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class QrScreen(SubScreenBase):
     btcprice_fixed = NumericProperty(0)  # type: int  # In cents
-    btcprice_date_fixed = StringProperty()  # YYYY/MM/DD
+    btcprice_time_fixed = StringProperty()  # HH:MM
 
     payment_satoshi = NumericProperty(0)  # type: int  # In satoshis
     payment_amount = NumericProperty(0)  # type: int  # In cents
@@ -29,7 +29,7 @@ class QrScreen(SubScreenBase):
         super().on_leave(*args)
 
         self.btcprice_fixed = 0
-        self.btcprice_date_fixed = ''
+        self.btcprice_time_fixed = ''
         self.payment_satoshi = 0
         self.payment_amount = 0
 
@@ -41,7 +41,7 @@ class QrScreen(SubScreenBase):
         payment_data = self.app.receive_data_from_mainproc('payment')
         if payment_data:
             self.btcprice_fixed = payment_data[0]
-            self.btcprice_date_fixed = payment_data[1]
+            self.btcprice_time_fixed = payment_data[1]
             self.payment_satoshi = payment_data[2]
             self.payment_amount = payment_data[3]
             payment_request = payment_data[4]

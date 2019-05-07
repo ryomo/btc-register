@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class WaitLndScreen(MainScreenBase):
     btcprice_fixed = NumericProperty(0)  # type: int  # In cents
-    btcprice_date_fixed = StringProperty()  # YYYY/MM/DD
+    btcprice_time_fixed = StringProperty()  # HH:MM
 
     payment_satoshi = NumericProperty(0)  # type: int  # In satoshis
     payment_amount = NumericProperty(0)  # type: int  # In cents
@@ -41,7 +41,7 @@ class WaitLndScreen(MainScreenBase):
         add_index = invoice[1]
         payment_request = invoice[2]
         self.btcprice_fixed = invoice[3]
-        self.btcprice_date_fixed = invoice[4]
+        self.btcprice_time_fixed = invoice[4]
         self.payment_satoshi = invoice[5]
         self.payment_amount = invoice[6]
 
@@ -87,7 +87,7 @@ class WaitLndScreen(MainScreenBase):
         super().on_leave(*args)
 
         self.btcprice_fixed = 0
-        self.btcprice_date_fixed = ''
+        self.btcprice_time_fixed = ''
         self.payment_satoshi = 0
         self.payment_amount = 0
 
