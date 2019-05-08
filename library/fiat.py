@@ -4,8 +4,9 @@ from decimal import Decimal
 class Fiat:
 
     _fiats = {
-        'USD': {'symbol': '$', 'fractional_digits': 2},
+        'EUR': {'symbol': '€', 'fractional_digits': 2},
         'JPY': {'symbol': '¥', 'fractional_digits': 0},
+        'USD': {'symbol': '$', 'fractional_digits': 2},
     }
 
     def __init__(self, fiat_name: str):
