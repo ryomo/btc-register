@@ -3,21 +3,21 @@ from decimal import Decimal
 
 class Fiat:
 
-    _fiats = {
-        'EUR': {'symbol': '€', 'fractional_digits': 2},
-        'JPY': {'symbol': '¥', 'fractional_digits': 0},
-        'USD': {'symbol': '$', 'fractional_digits': 2},
-    }
-
     def __init__(self, fiat_name: str):
+        fiats = {
+            'EUR': {'symbol': '€', 'fractional_digits': 2},
+            'JPY': {'symbol': '¥', 'fractional_digits': 0},
+            'USD': {'symbol': '$', 'fractional_digits': 2},
+        }
+
         # 'USD', 'JPY', ...
         self.name = fiat_name  # type: str
 
         # '$', '¥', ...
-        self.symbol = self._fiats[self.name]['symbol']  # type: str
+        self.symbol = fiats[self.name]['symbol']  # type: str
 
         #  the number of fractional digits after a decimal point
-        self.frac_digits = self._fiats[self.name]['fractional_digits']  # type: int
+        self.frac_digits = fiats[self.name]['fractional_digits']  # type: int
 
     def cent_to_dollar(self, cent: int) -> Decimal:
         if cent == 0:
