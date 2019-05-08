@@ -1,8 +1,11 @@
 import datetime
+import logging
 
 from kivy.app import App
 
 from library.db import Db
+
+logger = logging.getLogger(__name__)
 
 
 class ModelBase:

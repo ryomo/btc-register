@@ -1,6 +1,9 @@
+import logging
 from importlib import import_module
 
 from messages.messages_en import messages as default_messages
+
+logger = logging.getLogger(__name__)
 
 
 class Messenger:

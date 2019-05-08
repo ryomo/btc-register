@@ -1,6 +1,9 @@
+import logging
 from configparser import ConfigParser
 
 from run import APP_PATH
+
+logger = logging.getLogger(__name__)
 
 
 class Config(ConfigParser):
