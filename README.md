@@ -46,8 +46,9 @@ A register which accepts Bitcoin Lightning Network payment.
 
     * `Change User Password`
     * `Localization Options` > `Change Locale`
-        * Note: Select by space key.
-        * Select like `en_US.UTF-8`.
+        * Note 1: Select locale by space key.
+        * Note 2: To press OK button, you need to press the tab key.
+        * Select `{your_locale}.UTF-8`.
     * `Localisation Options` > `Change Timezone`
     * `Localisation Options` > `Change Keyboard Layout`
     * When connecting with WiFi, `Network Options` > `Wi-fi`
