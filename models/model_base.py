@@ -14,9 +14,9 @@ class ModelBase:
     _db = App.get_running_app().db  # type: Db
 
     def __init__(self):
-        self.id = None  # type: int
-        self.created_at = None  # type: int
-        self.updated_at = None  # type: int
+        self.id = None  # type: None|int
+        self.created_at = None  # type: None|int
+        self.updated_at = None  # type: None|int
 
     def set(self, columns: dict):
         """

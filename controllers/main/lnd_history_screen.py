@@ -22,8 +22,8 @@ class LndHistoryScreen(MainScreenBase):
 
     def __init__(self, **kw):
         super().__init__(**kw)
-        self.first_index_offset = None  # type: int
-        self.last_index_offset = None  # type: int
+        self.first_index_offset = None  # type: None|int
+        self.last_index_offset = None  # type: None|int
 
     def on_enter(self, *args):
         super().on_enter(*args)

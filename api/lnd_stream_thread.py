@@ -31,7 +31,7 @@ class LndStreamThread(threading.Thread):
         self._callback = callback  # type: Callable[[Response], None]
         self._add_index = add_index  # type: Optional[int]
         self._settle_index = settle_index  # type: Optional[int]
-        self._message = None  # type: str
+        self._message = None  # type: None|str
 
     def run(self):
         self.subscribe_invoices(self._callback, add_index=self._add_index, settle_index=self._settle_index)
