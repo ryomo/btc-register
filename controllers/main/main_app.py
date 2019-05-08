@@ -10,11 +10,11 @@ from api.lnd import Lnd, LndException
 from controllers.main.main_screen_manager import MainScreenManager
 from library.config import Config
 from library.db import Db
-from library.digit import Digit
+from localize.digit import Digit
 from library.exchange import Exchange, ExchangeEnum, ExchangeException
-from library.fiat import Fiat
+from localize.fiat import Fiat
 from library.utils import Utils
-from messages.messenger import Messenger
+from localize.messenger import Messenger
 from run import APP_PATH, APP_HOME
 
 kivy.require('1.10.0')

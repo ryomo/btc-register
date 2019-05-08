@@ -9,7 +9,7 @@ from kivy.uix.popup import Popup
 
 from controllers.main.main_app import MainApp
 from controllers.main.main_screen_base import MainScreenBase
-from library.fiat import Fiat
+from localize.fiat import Fiat
 from library.utils import Utils
 from models.payment_model import PaymentModel, PaymentMethod
 

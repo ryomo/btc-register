@@ -11,9 +11,9 @@ from kivy.uix.screenmanager import NoTransition
 
 from controllers.sub.sub_screen_manager import SubScreenManager
 from library.config import Config
-from library.digit import Digit
-from library.fiat import Fiat
-from messages.messenger import Messenger
+from localize.digit import Digit
+from localize.fiat import Fiat
+from localize.messenger import Messenger
 from run import APP_PATH
 
 DEBUG_SCREEN = None

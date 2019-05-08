@@ -1,7 +1,7 @@
 from decimal import Decimal
 from unittest import TestCase
 
-from library.fiat import Fiat
+from localize.fiat import Fiat
 
 
 class TestFiat(TestCase):

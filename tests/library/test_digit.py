@@ -2,13 +2,13 @@ import locale
 from decimal import Decimal
 from unittest import TestCase
 
-from library.digit import Digit
+from localize.digit import Digit
 
 
 class TestDigit(TestCase):
 
     def test_format(self):
-        from library.fiat import Fiat
+        from localize.fiat import Fiat
 
         locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
         digit = Digit()
