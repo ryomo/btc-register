@@ -20,6 +20,13 @@ class TestFiat(TestCase):
         fiat = Fiat('JPY')
         self.assertEqual(fiat.mark, '¥')
 
+    def test_frac_digits(self):
+        fiat = Fiat('USD')
+        self.assertEqual(fiat.frac_digits, 2)
+
+        fiat = Fiat('JPY')
+        self.assertEqual(fiat.frac_digits, 0)
+
     def test_cent_to_dollar(self):
         fiat = Fiat('USD')
         self.assertEqual(fiat.cent_to_dollar(100), Decimal('1'))
@@ -29,13 +36,13 @@ class TestFiat(TestCase):
         self.assertEqual(fiat.cent_to_dollar(100), Decimal('100'))
         self.assertEqual(fiat.cent_to_dollar(123), Decimal('123'))
 
-    def test_dollar_str_to_cent(self):
+    def test_dollar_to_cent(self):
         fiat = Fiat('USD')
-        self.assertEqual(fiat.dollar_str_to_cent('1.23'), 123)
-        self.assertEqual(fiat.dollar_str_to_cent('1.234'), 123)
+        self.assertEqual(fiat.dollar_to_cent(Decimal('1.23')), 123)
+        self.assertEqual(fiat.dollar_to_cent(Decimal('1.234')), 123)
 
         fiat = Fiat('JPY')
-        self.assertEqual(fiat.dollar_str_to_cent('123'), 123)
+        self.assertEqual(fiat.dollar_to_cent(Decimal('123')), 123)
 
     def test_has_dot(self):
         fiat = Fiat('USD')
@@ -43,10 +50,3 @@ class TestFiat(TestCase):
 
         fiat = Fiat('JPY')
         self.assertFalse(fiat.has_dot())
-
-    def test_max_digits_after_point(self):
-        fiat = Fiat('USD')
-        self.assertEqual(fiat.max_digits_after_point(), 2)
-
-        fiat = Fiat('JPY')
-        self.assertEqual(fiat.max_digits_after_point(), 0)

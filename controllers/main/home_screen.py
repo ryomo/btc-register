@@ -1,4 +1,5 @@
 import logging
+from decimal import Decimal
 
 from kivy.app import App
 from kivy.clock import Clock
@@ -153,7 +154,7 @@ class NumPadInput(NumPad):
             self.screen.message = self.app.messenger.warning('payment_not_entered')
             return
 
-        item_price = self.app.fiat.dollar_str_to_cent(number_display)  # type: int  # In cents
+        item_price = self.app.fiat.dollar_to_cent(Decimal(number_display))  # type: int  # In cents
 
         self.screen.ids.item_list.items.insert(0, {
             'index': None,  # TODO

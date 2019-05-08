@@ -43,7 +43,7 @@ class NumPad(BoxLayout):
 
         # Checks digits after decimal point.
         splitted_numbers = self.number_display.split('.')
-        if len(splitted_numbers) == 2 and len(splitted_numbers[1]) >= self.app.fiat.max_digits_after_point():
+        if len(splitted_numbers) == 2 and len(splitted_numbers[1]) >= self.app.fiat.frac_digits:
             return
 
         self.number_display += button_text
