@@ -148,13 +148,13 @@ class NumPadInput(NumPad):
         """
         Adds an item to the item list
         """
-        number_display = self.number_display.rstrip('.')
+        number = self.number.rstrip('.')
 
-        if not number_display:
+        if not number:
             self.screen.message = self.app.messenger.warning('payment_not_entered')
             return
 
-        item_price = self.app.fiat.dollar_to_cent(Decimal(number_display))  # type: int  # In cents
+        item_price = self.app.fiat.dollar_to_cent(Decimal(number))  # type: int  # In cents
 
         self.screen.ids.item_list.items.insert(0, {
             'index': None,  # TODO
@@ -163,6 +163,7 @@ class NumPadInput(NumPad):
         })
 
         self.number_display = ''
+        self.number = ''
 
 
 class PaymentMethodPopup(Popup):

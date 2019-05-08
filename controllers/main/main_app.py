@@ -1,3 +1,4 @@
+import locale
 import logging
 
 import kivy
@@ -9,6 +10,7 @@ from api.lnd import Lnd, LndException
 from controllers.main.main_screen_manager import MainScreenManager
 from library.config import Config
 from library.db import Db
+from library.digit import Digit
 from library.exchange import Exchange, ExchangeEnum, ExchangeException
 from library.fiat import Fiat
 from library.utils import Utils
@@ -21,6 +23,8 @@ DEBUG_SCREEN = None
 # DEBUG_SCREEN = 'history'
 
 logger = logging.getLogger(__name__)
+
+locale.setlocale(locale.LC_ALL, '')
 
 
 class MainApp(App):
@@ -43,6 +47,7 @@ class MainApp(App):
         self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
         self.exchange = ...  # type: Exchange
         self.fiat = ...  # type: Fiat
+        self.digit = ...  # type: Digit
 
     def build(self):
         db_path = APP_HOME + '/database.db'
@@ -66,6 +71,7 @@ class MainApp(App):
         self.m = self.messenger.get_text
 
         self.fiat = Fiat(self.app_config.get('app', 'fiat'))
+        self.digit = Digit()
 
         exchange_enum = ExchangeEnum(self.app_config.get('btc', 'price'))  # type: ExchangeEnum
         self.exchange = Exchange(exchange_enum)

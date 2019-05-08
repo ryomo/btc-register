@@ -1,3 +1,4 @@
+import locale
 import logging
 import time
 from threading import Thread
@@ -10,6 +11,7 @@ from kivy.uix.screenmanager import NoTransition
 
 from controllers.sub.sub_screen_manager import SubScreenManager
 from library.config import Config
+from library.digit import Digit
 from library.fiat import Fiat
 from messages.messenger import Messenger
 from run import APP_PATH
@@ -18,6 +20,8 @@ DEBUG_SCREEN = None
 # DEBUG_SCREEN = 'fiat'
 
 logger = logging.getLogger(__name__)
+
+locale.setlocale(locale.LC_ALL, '')
 
 
 class SubApp(App):
@@ -37,6 +41,7 @@ class SubApp(App):
         self.messenger = ...  # type: Messenger
         self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
         self.fiat = ...  # type: Fiat
+        self.digit = ...  # type: Digit
 
     def build(self):
         def receive_pipe(_pipe):
@@ -55,6 +60,7 @@ class SubApp(App):
         self.m = self.messenger.get_text
 
         self.fiat = Fiat(self.app_config.get('app', 'fiat'))
+        self.digit = Digit()
 
         Clock.schedule_interval(self.update_btcdata, 1 / 30)
 
