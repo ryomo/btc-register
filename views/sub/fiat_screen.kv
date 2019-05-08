@@ -4,12 +4,12 @@
 
         Label:
             font_size: 50
-            text: '{}: {} {:,}'.format(app.m('sub_fiat_screen_total'), app.fiat.symbol, app.fiat.cent_to_dollar(root.payment_total))
+            text: '{}: {}'.format(app.m('sub_fiat_screen_total'), app.f(app.fiat.cent_to_dollar(root.payment_total)))
 
         Label:
             font_size: 50
-            text: '{}: {} {:,}'.format(app.m('sub_fiat_screen_paid'), app.fiat.symbol, app.fiat.cent_to_dollar(root.payment_paid))
+            text: '{}: {}'.format(app.m('sub_fiat_screen_paid'), app.f(app.fiat.cent_to_dollar(root.payment_paid)))
 
         Label:
             font_size: 50
-            text: '{}: {} {:,}'.format(app.m('sub_fiat_screen_change'), app.fiat.symbol, app.fiat.cent_to_dollar(root.payment_change))
+            text: '{}: {}'.format(app.m('sub_fiat_screen_change'), app.f(app.fiat.cent_to_dollar(root.payment_change)))

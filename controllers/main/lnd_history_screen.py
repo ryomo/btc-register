@@ -1,11 +1,13 @@
 import logging
 
+from kivy.app import App
 from kivy.properties import StringProperty, ListProperty, BooleanProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 
 from api.lnd import LndException
+from controllers.main.main_app import MainApp
 from controllers.main.main_screen_base import MainScreenBase
 from library.utils import Utils
 
@@ -59,9 +61,9 @@ class LndHistoryScreen(MainScreenBase):
         for invoice in tmp_invoices:
             self.invoices.append({
                 'r_hash': invoice['r_hash'],
-                'add_index': '{:,}'.format(int(invoice['add_index'])),
+                'add_index': self.app.digit.format(int(invoice['add_index'])),
                 'memo': Utils.sanitize(invoice['memo']) if 'memo' in invoice else '-',
-                'satoshi': '{:,}'.format(int(invoice['value'])) if 'value' in invoice else '-',
+                'satoshi': self.app.digit.format(int(invoice['value'])) if 'value' in invoice else '-',
                 'creation_date': Utils.timestamp_to_strftime(invoice['creation_date']),
                 'settled': '✓' if ('settled' in invoice and invoice['settled']) else '-',
             })
@@ -134,7 +136,8 @@ class LndDetailPopup(Popup):
                     text=text_if_not_exist
                 ))
 
-        self.title = '[{}]'.format(invoice['add_index'])
+        app = App.get_running_app()  # type: MainApp
+        self.title = '[{}]'.format(app.digit.format(int(invoice['add_index'])))
 
         add_row(invoice, 'add_index')
         add_row(invoice, 'r_hash')

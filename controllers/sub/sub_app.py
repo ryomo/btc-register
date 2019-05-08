@@ -1,6 +1,7 @@
 import locale
 import logging
 import time
+from decimal import Decimal
 from threading import Thread
 from typing import Any, Optional
 
@@ -101,3 +102,25 @@ class SubApp(App):
             return tmp_piped_data
         else:
             return None
+
+    def f(self, number: Decimal) -> str:
+        """
+        Format fiat currency.
+        e.g.) '$ 123.45'
+        :param number:
+        :return:
+        """
+        if number == 0:
+            return '0'
+        return self.fiat.symbol + ' ' + self.digit.format(number, self.fiat.frac_digits)
+
+    def c(self, number: Decimal) -> str:
+        """
+        Format crypto currency.
+        E.g.) '0.00001234'
+        :param number:
+        :return:
+        """
+        if number == 0:
+            return '0'
+        return self.digit.format(number, 8)

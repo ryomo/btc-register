@@ -1,6 +1,7 @@
 import locale
 import logging
 from decimal import Decimal
+from typing import Union
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +17,7 @@ class Digit:
         logger.debug('LOCALE: {}'.format(locale.getlocale()))
 
     @staticmethod
-    def format(number: Decimal, flac_digit: int = 0) -> str:
+    def format(number: Union[int, Decimal], flac_digit: int = 0) -> str:
         return locale.format_string('%.{}f'.format(flac_digit), number, grouping=True)
 
     def get_decimal_point(self) -> str:

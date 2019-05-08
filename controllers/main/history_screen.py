@@ -138,18 +138,17 @@ class PaymentDetailPopup(Popup):
 
         self.title = '[{}] ({})'.format(payment_method.name, payment_date)
 
-        add_row(self.app.m('payment_detail_id'), '{:,}'.format(payment_row['id']))
+        add_row(self.app.m('payment_detail_id'), self.app.digit.format(payment_row['id']))
         add_row(self.app.m('payment_detail_date'), payment_date)
         if payment_method == PaymentMethod.FIAT:
             add_row(self.app.m('payment_detail_method'), self.app.m('payment_method_fiat'))
-            add_row(self.app.m('payment_detail_total'), '{} {:,}'.format(fiat.symbol, payment_row['amount']))
-            add_row(self.app.m('payment_detail_paid'), '{} {:,}'.format(fiat.symbol, payment_row['payment_fiat_paid']))
-            add_row(self.app.m('payment_detail_change'),
-                    '{} {:,}'.format(fiat.symbol, payment_row['payment_fiat_change']))
+            add_row(self.app.m('payment_detail_total'), self.app.f(payment_row['amount']))
+            add_row(self.app.m('payment_detail_paid'), self.app.f(payment_row['payment_fiat_paid']))
+            add_row(self.app.m('payment_detail_change'), self.app.f(payment_row['payment_fiat_change']))
         elif payment_method == PaymentMethod.LND:
             add_row(self.app.m('payment_detail_method'), self.app.m('payment_method_lnd'))
-            add_row(self.app.m('payment_detail_amount'), '{} {:,}'.format(fiat.symbol, payment_row['amount']))
-            add_row(self.app.m('payment_detail_btc'), '{:,} BTC'.format(Utils.satoshi_to_btc(payment_btc_satoshi)))
+            add_row(self.app.m('payment_detail_amount'), self.app.f(payment_row['amount']))
+            add_row(self.app.m('payment_detail_btc'), self.app.c(Utils.satoshi_to_btc(payment_btc_satoshi)) + ' BTC')
         else:
             raise ValueError
 
