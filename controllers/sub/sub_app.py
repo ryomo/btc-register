@@ -1,20 +1,15 @@
-import locale
 import logging
 import time
-from decimal import Decimal
 from threading import Thread
 from typing import Any, Optional
 
-from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import StringProperty, NumericProperty
 from kivy.uix.screenmanager import NoTransition
 
+from controllers.AppBase import AppBase
 from controllers.sub.sub_screen_manager import SubScreenManager
 from library.config import Config
-from localize.digit import Digit
-from localize.fiat import Fiat
-from localize.messenger import Messenger
 from run import APP_PATH
 
 DEBUG_SCREEN = None
@@ -22,29 +17,24 @@ DEBUG_SCREEN = None
 
 logger = logging.getLogger(__name__)
 
-locale.setlocale(locale.LC_ALL, '')
 
-
-class SubApp(App):
+class SubApp(AppBase):
     kv_file = APP_PATH + '/views/sub/sub.kv'
 
     btcprice = NumericProperty(0)  # type: int  # In cents
     btcprice_time = StringProperty()  # HH:MM
 
     def __init__(self, pipe, app_config: Config, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(pipe, app_config, **kwargs)
+
         self._pipe = pipe
-        self._piped_data = None  # type: Optional[(str, Any)]
-        """Data sent from main process."""
+        self._piped_data = None  # type: Optional[(str, Any)]  # Data sent from the main process.
 
         self.screen_manager = ...  # type: SubScreenManager
-        self.app_config = app_config  # type: Config
-        self.messenger = ...  # type: Messenger
-        self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
-        self.fiat = ...  # type: Fiat
-        self.digit = ...  # type: Digit
 
     def build(self):
+        super().build()
+
         def receive_pipe(_pipe):
             while True:
                 # Ensure `_piped_data` is empty.
@@ -56,12 +46,6 @@ class SubApp(App):
 
         thread = Thread(target=receive_pipe, args=(self._pipe,))
         thread.start()
-
-        self.messenger = Messenger(self.app_config.get('app', 'lang'))
-        self.m = self.messenger.get_text
-
-        self.fiat = Fiat(self.app_config.get('app', 'fiat'))
-        self.digit = Digit()
 
         Clock.schedule_interval(self.update_btcdata, 1 / 30)
 
@@ -102,25 +86,3 @@ class SubApp(App):
             return tmp_piped_data
         else:
             return None
-
-    def f(self, number: Decimal) -> str:
-        """
-        Format fiat currency.
-        e.g.) '$ 123.45'
-        :param number:
-        :return:
-        """
-        if number == 0:
-            return '0'
-        return self.fiat.symbol + ' ' + self.digit.format(number, self.fiat.frac_digits)
-
-    def c(self, number: Decimal) -> str:
-        """
-        Format crypto currency.
-        E.g.) '0.00001234'
-        :param number:
-        :return:
-        """
-        if number == 0:
-            return '0'
-        return self.digit.format(number, 8)

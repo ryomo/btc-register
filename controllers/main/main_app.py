@@ -1,21 +1,16 @@
-import locale
 import logging
-from decimal import Decimal
 
 import kivy
-from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import BooleanProperty, StringProperty, NumericProperty
 
 from api.lnd import Lnd, LndException
+from controllers.AppBase import AppBase
 from controllers.main.main_screen_manager import MainScreenManager
 from library.config import Config
 from library.db import Db
-from localize.digit import Digit
 from library.exchange import Exchange, ExchangeEnum, ExchangeException
-from localize.fiat import Fiat
 from library.utils import Utils
-from localize.messenger import Messenger
 from run import APP_PATH, APP_HOME
 
 kivy.require('1.10.0')
@@ -25,10 +20,8 @@ DEBUG_SCREEN = None
 
 logger = logging.getLogger(__name__)
 
-locale.setlocale(locale.LC_ALL, '')
 
-
-class MainApp(App):
+class MainApp(AppBase):
     kv_file = APP_PATH + '/views/main/main.kv'
 
     btcprice = NumericProperty(0)  # type: int  # In cents
@@ -37,20 +30,18 @@ class MainApp(App):
     enable_update_btcdata = BooleanProperty(True)  # type: BooleanProperty
 
     def __init__(self, pipe, app_config: Config, **kwargs):
-        super().__init__(**kwargs)
-        self._pipe = pipe  # Inter process connection to send some data.
+        super().__init__(pipe, app_config, **kwargs)
+
+        self._pipe = pipe  # Inter process connection to send some data to the sub process.
 
         self.screen_manager = ...  # type: MainScreenManager
-        self.app_config = app_config  # type: Config
         self.db = ...  # type: Db
         self.lnd = ...  # type: Lnd
-        self.messenger = ...  # type: Messenger
-        self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
         self.exchange = ...  # type: Exchange
-        self.fiat = ...  # type: Fiat
-        self.digit = ...  # type: Digit
 
     def build(self):
+        super().build()
+
         db_path = APP_HOME + '/database.db'
         self.db = Db(db_path, APP_PATH + '/schemas/')
 
@@ -67,12 +58,6 @@ class MainApp(App):
                     raise e
         else:
             self.lnd = None
-
-        self.messenger = Messenger(self.app_config.get('app', 'lang'))
-        self.m = self.messenger.get_text
-
-        self.fiat = Fiat(self.app_config.get('app', 'fiat'))
-        self.digit = Digit()
 
         exchange_enum = ExchangeEnum(self.app_config.get('btc', 'price'))  # type: ExchangeEnum
         self.exchange = Exchange(exchange_enum)
@@ -162,25 +147,3 @@ class MainApp(App):
         """
         open(APP_HOME + '/.shutdown', 'w').close()
         self.stop()
-
-    def f(self, number: Decimal) -> str:
-        """
-        Format fiat currency.
-        e.g.) '$ 123.45'
-        :param number:
-        :return:
-        """
-        if number == 0:
-            return '0'
-        return self.fiat.symbol + ' ' + self.digit.format(number, self.fiat.frac_digits)
-
-    def c(self, number: Decimal) -> str:
-        """
-        Format crypto currency.
-        E.g.) '0.00001234'
-        :param number:
-        :return:
-        """
-        if number == 0:
-            return '0'
-        return self.digit.format(number, 8)
