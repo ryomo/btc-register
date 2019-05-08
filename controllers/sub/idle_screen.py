@@ -8,11 +8,11 @@ logger = logging.getLogger(__name__)
 
 
 class IdleScreen(SubScreenBase):
-    # btcprice and btcprice_date are updated by SubApp.update_btcdata().
+    # btcprice and btcprice_time are updated by SubApp.update_btcdata().
     btcprice = NumericProperty(0)  # type: int  # In cents
-    btcprice_date = StringProperty()  # YYYY/MM/DD
+    btcprice_time = StringProperty()  # HH:MM
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
         self.btcprice = self.app.btcprice
-        self.btcprice_date = self.app.btcprice_date
+        self.btcprice_time = self.app.btcprice_time

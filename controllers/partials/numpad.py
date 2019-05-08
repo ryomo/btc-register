@@ -1,3 +1,5 @@
+import logging
+
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import StringProperty
@@ -6,17 +8,21 @@ from kivy.uix.screenmanager import Screen
 
 from controllers.main.main_app import MainApp
 
+logger = logging.getLogger(__name__)
+
 
 class NumPad(BoxLayout):
     MAX_DIGITS = 12
 
-    number_display = StringProperty()  # type: str
+    number_display = StringProperty()  # type: str  # Numbers to be displayed.
+    number = ''  # type: str  # Numbers internally used. Need to use `.` as decimal point.
 
     def __init__(self, **kwargs):
         """Note: At this moment, the screen is not initialized."""
         super().__init__(**kwargs)
         self.app = App.get_running_app()  # type: MainApp
         self.screen = ...  # type: Screen
+        self.decimal_point = self.app.digit.get_decimal_point()  # type: str
 
         Clock.schedule_once(self.on_init)
 
@@ -24,7 +30,7 @@ class NumPad(BoxLayout):
         self.screen = self.app.screen_manager.current_screen
 
         if self.app.fiat.has_dot():
-            self.ids.num_button_optional.text = '.'
+            self.ids.num_button_optional.text = self.decimal_point
             self.ids.num_button_optional.on_release = self.push_dot_button
         else:
             self.ids.num_button_optional.text = '00'
@@ -42,24 +48,27 @@ class NumPad(BoxLayout):
             return
 
         # Checks digits after decimal point.
-        splitted_numbers = self.number_display.split('.')
-        if len(splitted_numbers) == 2 and len(splitted_numbers[1]) >= self.app.fiat.max_digits_after_point():
+        splitted_numbers = self.number_display.split(self.decimal_point)
+        if len(splitted_numbers) == 2 and len(splitted_numbers[1]) >= self.app.fiat.frac_digits:
             return
 
         self.number_display += button_text
+        self.number += button_text
 
     def push_dot_button(self):
-        if '.' in self.number_display:
+        if self.decimal_point in self.number_display:
             return
 
         if self.number_display == '':
             self.number_display = '0'
 
-        self.number_display += '.'
+        self.number_display += self.decimal_point
+        self.number += '.'
 
     def push_delete_button(self):
         if self.number_display != '':
             self.number_display = self.number_display[:-1]
+            self.number = self.number[:-1]
 
     def push_image_button(self):
         pass

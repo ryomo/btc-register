@@ -1,4 +1,5 @@
 import logging
+from decimal import Decimal
 
 from kivy.app import App
 from kivy.clock import Clock
@@ -21,9 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class HomeScreen(MainScreenBase):
-    # btcprice and btcprice_date are updated by MainApp.update_btcdata().
+    # btcprice and btcprice_time are updated by MainApp.update_btcdata().
     btcprice = NumericProperty(0)  # type: int  # In cents
-    btcprice_date = StringProperty()  # YYYY/MM/DD
+    btcprice_time = StringProperty()  # HH:MM
 
     payment_amount = NumericProperty(0)  # type: int  # In cents
     payment_satoshi = NumericProperty(0)  # type: int  # In satoshis
@@ -31,7 +32,7 @@ class HomeScreen(MainScreenBase):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
         self.btcprice = self.app.btcprice
-        self.btcprice_date = self.app.btcprice_date
+        self.btcprice_time = self.app.btcprice_time
 
         if self.manager.get_interscreen_data('clear_inputted_data'):
             self.clear_inputted_data()
@@ -147,13 +148,13 @@ class NumPadInput(NumPad):
         """
         Adds an item to the item list
         """
-        number_display = self.number_display.rstrip('.')
+        number = self.number.rstrip('.')
 
-        if not number_display:
+        if not number:
             self.screen.message = self.app.messenger.warning('payment_not_entered')
             return
 
-        item_price = self.app.fiat.dollar_str_to_cent(number_display)  # type: int  # In cents
+        item_price = self.app.fiat.dollar_to_cent(Decimal(number))  # type: int  # In cents
 
         self.screen.ids.item_list.items.insert(0, {
             'index': None,  # TODO
@@ -162,6 +163,7 @@ class NumPadInput(NumPad):
         })
 
         self.number_display = ''
+        self.number = ''
 
 
 class PaymentMethodPopup(Popup):
@@ -225,7 +227,7 @@ class PaymentMethodPopup(Popup):
         shop_name = self.app.app_config.get('app', 'shop_name')
 
         btcprice = self.app.btcprice
-        btcprice_date = self.app.btcprice_date
+        btcprice_time = self.app.btcprice_time
         payment_satoshi = Utils.fiat_to_satoshi(payment_amount, btcprice)
 
         # Make a lnd invoice
@@ -236,7 +238,10 @@ class PaymentMethodPopup(Popup):
         try:
             r_hash, add_index, payment_request = lnd.add_invoice(
                 value=payment_satoshi,
-                memo='[{}] {} {:,}'.format(shop_name, self.app.fiat.mark, self.app.fiat.cent_to_dollar(payment_amount)),
+                memo='[{}] {}'.format(
+                    shop_name,
+                    self.app.f(self.app.fiat.cent_to_dollar(payment_amount))
+                ),
                 expiry=3 * 60,
             )
         except LndException as e:
@@ -249,7 +254,7 @@ class PaymentMethodPopup(Popup):
         self.app.send_data_to_subproc('screen', 'qr')
         self.app.send_data_to_subproc(
             'payment',
-            (btcprice, btcprice_date, payment_satoshi, payment_amount, payment_request)
+            (btcprice, btcprice_time, payment_satoshi, payment_amount, payment_request)
         )
 
         self.dismiss()
@@ -258,6 +263,6 @@ class PaymentMethodPopup(Popup):
         self.screen_manager.transition.direction = 'left'
         self.screen_manager.set_interscreen_data(
             'invoice',
-            (r_hash, add_index, payment_request, btcprice, btcprice_date, payment_satoshi, payment_amount)
+            (r_hash, add_index, payment_request, btcprice, btcprice_time, payment_satoshi, payment_amount)
         )
         self.screen_manager.load_screen('wait_lnd')

@@ -91,13 +91,13 @@
     on_release: app.screen_manager.current_screen.popup(self.payment_id)
     Label:
         size_hint_x: .5
-        text: '{:,}'.format(root.payment_id)
+        text: app.digit.format(root.payment_id)
     Label:
         text: root.method
     Label:
-        text: '{} {:,}'.format(app.fiat.mark, root.amount)
+        text: app.f(root.amount)
     Label:
-        text: '{:,} BTC'.format(root.btc) if root.btc is not None else ''
+        text: app.c(root.btc) + ' BTC' if root.btc is not None else ''
     Label:
         text: root.created_at
 

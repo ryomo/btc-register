@@ -1,18 +1,16 @@
 import logging
 
 import kivy
-from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import BooleanProperty, StringProperty, NumericProperty
 
 from api.lnd import Lnd, LndException
+from controllers.AppBase import AppBase
 from controllers.main.main_screen_manager import MainScreenManager
 from library.config import Config
 from library.db import Db
 from library.exchange import Exchange, ExchangeEnum, ExchangeException
-from library.fiat import Fiat
 from library.utils import Utils
-from messages.messenger import Messenger
 from run import APP_PATH, APP_HOME
 
 kivy.require('1.10.0')
@@ -23,28 +21,27 @@ DEBUG_SCREEN = None
 logger = logging.getLogger(__name__)
 
 
-class MainApp(App):
+class MainApp(AppBase):
     kv_file = APP_PATH + '/views/main/main.kv'
 
     btcprice = NumericProperty(0)  # type: int  # In cents
-    btcprice_date = StringProperty()  # YYYY/MM/DD
+    btcprice_time = StringProperty()  # HH:MM
 
     enable_update_btcdata = BooleanProperty(True)  # type: BooleanProperty
 
     def __init__(self, pipe, app_config: Config, **kwargs):
-        super().__init__(**kwargs)
-        self._pipe = pipe  # Inter process connection to send some data.
+        super().__init__(pipe, app_config, **kwargs)
+
+        self._pipe = pipe  # Inter process connection to send some data to the sub process.
 
         self.screen_manager = ...  # type: MainScreenManager
-        self.app_config = app_config  # type: Config
         self.db = ...  # type: Db
         self.lnd = ...  # type: Lnd
-        self.messenger = ...  # type: Messenger
-        self.m = ...  # type: Messenger.get_text  # Usage: app.m('key')
         self.exchange = ...  # type: Exchange
-        self.fiat = ...  # type: Fiat
 
     def build(self):
+        super().build()
+
         db_path = APP_HOME + '/database.db'
         self.db = Db(db_path, APP_PATH + '/schemas/')
 
@@ -61,11 +58,6 @@ class MainApp(App):
                     raise e
         else:
             self.lnd = None
-
-        self.messenger = Messenger(self.app_config.get('app', 'lang'))
-        self.m = self.messenger.get_text
-
-        self.fiat = Fiat(self.app_config.get('app', 'fiat'))
 
         exchange_enum = ExchangeEnum(self.app_config.get('btc', 'price'))  # type: ExchangeEnum
         self.exchange = Exchange(exchange_enum)
@@ -94,7 +86,7 @@ class MainApp(App):
             ))
             self.send_data_to_subproc('screen', 'qr')
             self.send_data_to_subproc('payment',
-                                      (390000, '2019/03/13', 100000, 390, payment_request))
+                                      (390000, '14:23', 100000, 390, payment_request))
 
         elif screen_name == 'wait_fiat':
             payment_fiat = 1500
@@ -111,15 +103,15 @@ class MainApp(App):
             return
         try:
             self.btcprice = self.exchange.fetch_btc_price()
-            self.btcprice_date = Utils.get_strftime('%H:%M')
+            self.btcprice_time = Utils.get_strftime('%H:%M')
 
-            self.send_data_to_subproc('btcdata', (self.btcprice, self.btcprice_date))
+            self.send_data_to_subproc('btcdata', (self.btcprice, self.btcprice_time))
 
-            # Updates screen's btcprice and btcprice_date.
+            # Updates screen's btcprice and btcprice_time.
             if hasattr(self.screen_manager.current_screen, 'btcprice'):
                 self.screen_manager.current_screen.btcprice = self.btcprice
-            if hasattr(self.screen_manager.current_screen, 'btcprice_date'):
-                self.screen_manager.current_screen.btcprice_date = self.btcprice_date
+            if hasattr(self.screen_manager.current_screen, 'btcprice_time'):
+                self.screen_manager.current_screen.btcprice_time = self.btcprice_time
 
         except ExchangeException as e:
             logger.exception(e)

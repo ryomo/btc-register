@@ -9,9 +9,9 @@ class PaymentFiatModel(ModelBase):
 
     def __init__(self):
         super().__init__()
-        self.payment_id = None  # type: int  # Unique
-        self.paid = None  # type: int
-        self.change = None  # type: int
+        self.payment_id = None  # type: None|int  # Unique
+        self.paid = None  # type: None|int
+        self.change = None  # type: None|int
 
     def validate(self):
         # paid

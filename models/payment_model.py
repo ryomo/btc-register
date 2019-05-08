@@ -34,8 +34,8 @@ class PaymentModel(ModelBase):
 
     def __init__(self):
         super().__init__()
-        self.method = None  # type: PaymentMethod  # Needs `self.method.value` to convert integer, when you save to db.
-        self.amount = None  # type: int  # In cents, not in dollars.
+        self.method = None  # type: None|PaymentMethod  # You need to do `self.method.value`, when you save this to db.
+        self.amount = None  # type: None|int  # In cents, not in dollars.
 
     def validate(self):
         # amount

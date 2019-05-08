@@ -1,4 +1,5 @@
 import logging
+from decimal import Decimal
 
 from kivy.properties import NumericProperty
 
@@ -64,13 +65,13 @@ class NumPadChange(NumPad):
         """
         Calculates change
         """
-        number_display = self.number_display.rstrip('.')  # type: str  # In dollars
+        number = self.number.rstrip('.')  # type: str  # In dollars
 
-        if not number_display:
+        if not number:
             self.screen.message = self.app.messenger.warning('amount_not_inputted')
             return
 
-        self.screen.payment_paid = self.app.fiat.dollar_str_to_cent(number_display)
+        self.screen.payment_paid = self.app.fiat.dollar_to_cent(Decimal(number))
         self.screen.payment_change = self.screen.payment_paid - self.screen.payment_total
 
         self.app.send_data_to_subproc('payment_change_info', (

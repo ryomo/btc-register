@@ -61,7 +61,7 @@
                             size_hint_x: 8
                             font_size: 20
                             btcprice: root.btcprice
-                            btcprice_date: root.btcprice_date
+                            btcprice_time: root.btcprice_time
 
                         Button:
                             size_hint_x: 1.5
@@ -81,7 +81,7 @@
                     Label:
                         size_hint_x: 8
                         font_size: 20
-                        text: '{} {:,} / {:,} BTC'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.payment_amount), Utils.satoshi_to_btc(root.payment_satoshi))
+                        text: '{} / {} BTC'.format(app.f(app.fiat.cent_to_dollar(root.payment_amount)), app.c(Utils.satoshi_to_btc(root.payment_satoshi)))
                     Button:
                         size_hint_x: 2
                         on_release: root.popup_payment_method()
@@ -137,7 +137,7 @@
             size: self.size
     Label:
         size_hint_x: 6
-        text: '{} {:,}'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.price))
+        text: app.f(app.fiat.cent_to_dollar(root.price))
     Button:
         on_release: root.parent.parent.delete_item(int(root.index))
         Image:

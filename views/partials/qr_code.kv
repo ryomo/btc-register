@@ -8,14 +8,14 @@
         orientation: 'vertical'
         Label:
             font_size: 30
-            text: '{:,} BTC'.format(Utils.satoshi_to_btc(root.payment_satoshi))
+            text: app.c(Utils.satoshi_to_btc(root.payment_satoshi)) + ' BTC'
         Label:
             font_size: 30
-            text: '{} {:,}'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.payment_amount)) if root.payment_amount else ''
+            text: app.f(app.fiat.cent_to_dollar(root.payment_amount)) if root.payment_amount else ''
         PriceLabel:
             font_size: 30
             btcprice: root.btcprice_fixed
-            btcprice_date: root.btcprice_date_fixed
+            btcprice_time: root.btcprice_time_fixed
 
     Image:
         canvas.after:

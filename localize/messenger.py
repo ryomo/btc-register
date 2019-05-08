@@ -1,6 +1,9 @@
+import logging
 from importlib import import_module
 
-from messages.messages_en import messages as default_messages
+from localize.messages_en import messages as default_messages
+
+logger = logging.getLogger(__name__)
 
 
 class Messenger:
@@ -11,7 +14,7 @@ class Messenger:
             self.messages = default_messages
         else:
             # Import `messages` module dynamically.
-            messages_module = import_module('messages.messages_{}'.format(lang))
+            messages_module = import_module('localize.messages_{}'.format(lang))
             messages = getattr(messages_module, 'messages')
 
             # Merge dicts

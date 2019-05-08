@@ -9,8 +9,8 @@ class PaymentBtcModel(ModelBase):
 
     def __init__(self):
         super().__init__()
-        self.payment_id = None  # type: int  # Unique
-        self.satoshi = None  # type: int
+        self.payment_id = None  # type: None|int  # Unique
+        self.satoshi = None  # type: None|int
 
     def validate(self):
         # satoshi
