@@ -13,7 +13,7 @@ class Fiat:
         self.name = fiat_name  # type: str
 
         # '$', '¥', ...
-        self.mark = self._fiats[self.name]['symbol']  # type: str
+        self.symbol = self._fiats[self.name]['symbol']  # type: str
 
         #  the number of fractional digits after a decimal point
         self.frac_digits = self._fiats[self.name]['fractional_digits']  # type: int

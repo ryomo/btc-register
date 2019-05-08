@@ -11,7 +11,7 @@
             text: '{:,} BTC'.format(Utils.satoshi_to_btc(root.payment_satoshi))
         Label:
             font_size: 30
-            text: '{} {:,}'.format(app.fiat.mark, app.fiat.cent_to_dollar(root.payment_amount)) if root.payment_amount else ''
+            text: '{} {:,}'.format(app.fiat.symbol, app.fiat.cent_to_dollar(root.payment_amount)) if root.payment_amount else ''
         PriceLabel:
             font_size: 30
             btcprice: root.btcprice_fixed

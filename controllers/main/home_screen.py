@@ -237,7 +237,7 @@ class PaymentMethodPopup(Popup):
         try:
             r_hash, add_index, payment_request = lnd.add_invoice(
                 value=payment_satoshi,
-                memo='[{}] {} {:,}'.format(shop_name, self.app.fiat.mark, self.app.fiat.cent_to_dollar(payment_amount)),
+                memo='[{}] {} {:,}'.format(shop_name, self.app.fiat.symbol, self.app.fiat.cent_to_dollar(payment_amount)),
                 expiry=3 * 60,
             )
         except LndException as e:

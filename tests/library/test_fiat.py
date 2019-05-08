@@ -13,12 +13,12 @@ class TestFiat(TestCase):
         fiat = Fiat('JPY')
         self.assertEqual(fiat.name, 'JPY')
 
-    def test_mark(self):
+    def test_symbol(self):
         fiat = Fiat('USD')
-        self.assertEqual(fiat.mark, '$')
+        self.assertEqual(fiat.symbol, '$')
 
         fiat = Fiat('JPY')
-        self.assertEqual(fiat.mark, '¥')
+        self.assertEqual(fiat.symbol, '¥')
 
     def test_frac_digits(self):
         fiat = Fiat('USD')
