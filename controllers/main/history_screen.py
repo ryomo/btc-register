@@ -63,7 +63,7 @@ class HistoryScreen(MainScreenBase):
                 'method': payment_method_name,
                 'amount': payment_row['amount'],
                 'created_at': Utils.timestamp_to_strftime(payment_row['created_at']),
-                'btc': Utils.satoshi_to_btc(payment_btc_satoshi),
+                'btc': Utils.satoshi_to_btc(payment_btc_satoshi) if payment_btc_satoshi is not None else None,
             })
 
         payment_count_all = PaymentModel.count()

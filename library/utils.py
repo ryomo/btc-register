@@ -3,7 +3,6 @@ import decimal
 import io
 import logging
 from decimal import Decimal
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -73,9 +72,7 @@ class Utils:
         return img_data
 
     @staticmethod
-    def satoshi_to_btc(satoshi: Optional[int]) -> Optional[Decimal]:
-        if satoshi is None:
-            return None
+    def satoshi_to_btc(satoshi: int) -> Decimal:
         if satoshi == 0:
             return Decimal(0)
         return (Decimal(satoshi) / 100000000).quantize(Decimal('0.00000001'))
