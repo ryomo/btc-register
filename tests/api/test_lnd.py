@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 import pathlib
-from unittest import TestCase
+from unittest import TestCase, skip
 
 from requests import Response
 
@@ -11,6 +11,7 @@ from api.lnd import Lnd
 
 class TestLnd(TestCase):
 
+    @skip('Need lnd server to run TestLnd class.')
     def setUp(self):
         self.lnd = Lnd(
             'https://localhost:8080',
@@ -18,7 +19,7 @@ class TestLnd(TestCase):
             '~/.lnd/data/chain/bitcoin/testnet/admin.macaroon'
         )
 
-        # Reads password
+        # Read password
         tests_dir = os.path.dirname(os.path.abspath(__file__)) + '/../'
         try:
             wallet_password = pathlib.Path(tests_dir + '.secret').read_text()
@@ -42,36 +43,36 @@ class TestLnd(TestCase):
                 (json_data before payment e.g.)
                 {
                     'result': {
-                        'payment_request': 'lntb249790n1pwztadvpp5cefc0cac0fnc3n39p7n9rmh9msgqd854ln879e6wvp54f6jzc...',
                         'add_index': '103',
-                        'expiry': '180',
+                        'cltv_expiry': '144',
                         'creation_date': '1545991596',
+                        'expiry': '180',
                         'memo': 'description test',
+                        'payment_request': 'lntb249790n1pwztadvpp5cefc0cac0fnc3n39p7n9rmh9msgqd854ln879e6wvp54f6jzc...',
+                        'r_hash': 'xlOH47h6Z4jOJQ+mUe7l3BAGnpX8z+LnTmBpVOpCxjA='
                         'r_preimage': '01SXFpPfsOuPJqtBLEXwOLnPu6SroZwCyqVcCbbD2UE=',
                         'value': '24979',
-                        'cltv_expiry': '144',
-                        'r_hash': 'xlOH47h6Z4jOJQ+mUe7l3BAGnpX8z+LnTmBpVOpCxjA='
                     }
                 }
                 
                 (json_data after payment e.g.)
                 {
                     'result': {
-                        'amt_paid_sat': '24979',
-                        'payment_request': 'lntb249790n1pwztadvpp5cefc0cac0fnc3n39p7n9rmh9msgqd854ln879e6wvp54f6jzc...',
-                        'amt_paid_msat': '24979000',
-                        'memo': 'description test',
-                        'r_preimage': '01SXFpPfsOuPJqtBLEXwOLnPu6SroZwCyqVcCbbD2UE=',
-                        'value': '24979',
-                        'cltv_expiry': '144',
-                        'expiry': '180',
-                        'settle_index': '12',
-                        'amt_paid': '24979000',
-                        'creation_date': '1545991596',
                         'add_index': '103',
-                        'settled': True,
+                        'amt_paid_msat': '24979000',
+                        'amt_paid_sat': '24979',
+                        'amt_paid': '24979000',
+                        'cltv_expiry': '144',
+                        'creation_date': '1545991596',
+                        'expiry': '180',
+                        'memo': 'description test',
+                        'payment_request': 'lntb249790n1pwztadvpp5cefc0cac0fnc3n39p7n9rmh9msgqd854ln879e6wvp54f6jzc...',
                         'r_hash': 'xlOH47h6Z4jOJQ+mUe7l3BAGnpX8z+LnTmBpVOpCxjA=',
+                        'r_preimage': '01SXFpPfsOuPJqtBLEXwOLnPu6SroZwCyqVcCbbD2UE=',
                         'settle_date': '1545991627'
+                        'settle_index': '12',
+                        'settled': True,
+                        'value': '24979',
                     }
                 }
                 """
