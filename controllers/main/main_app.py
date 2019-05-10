@@ -5,7 +5,7 @@ from kivy.clock import Clock
 from kivy.properties import BooleanProperty, StringProperty, NumericProperty
 
 from api.lnd import Lnd, LndException
-from controllers.AppBase import AppBase
+from controllers.app_base import AppBase
 from controllers.main.main_screen_manager import MainScreenManager
 from library.config import Config
 from library.db import Db
