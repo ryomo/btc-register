@@ -7,7 +7,7 @@ from kivy.clock import Clock
 from kivy.properties import StringProperty, NumericProperty
 from kivy.uix.screenmanager import NoTransition
 
-from controllers.AppBase import AppBase
+from controllers.app_base import AppBase
 from controllers.sub.sub_screen_manager import SubScreenManager
 from library.config import Config
 from run import APP_PATH

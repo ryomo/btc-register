@@ -54,7 +54,8 @@ BitcoinのLightning Networkでの支払いを受け付けるレジアプリで�
     * `Change User Password`
     * `Localization Options` > `Change Locale`
         * スペースで選択。
-        * `ja_JP.UTF-8`など、UTF-8のを選ぶ。
+        * OKボタンを押すには、タブキーを押す必要がある。
+        * `ja_JP.UTF-8`など、UTF-8のlocaleを選ぶ。
     * `Localisation Options` > `Change Timezone`
     * `Localisation Options` > `Change Keyboard Layout`
     * Wifiで接続する場合は、`Network Options` > `Wi-fi`
