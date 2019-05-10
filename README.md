@@ -2,6 +2,8 @@
 
 # btc-register
 
+[![CircleCI](https://circleci.com/gh/ryomo/btc-register.svg?style=svg)](https://circleci.com/gh/ryomo/btc-register)
+
 ## What is this ?
 
 A register which accepts Bitcoin Lightning Network payment.
