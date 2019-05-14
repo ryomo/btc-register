@@ -23,7 +23,7 @@ messages = {
     'payment_amount_zero': 'The payment amount is 0.',
     'payment_not_entered': 'The payment amount has not been entered.',
     'fiat_button': 'Fiat',
-    'lightning_payment_button': 'BTC\n(Lihgtning Network)',
+    'lightning_payment_button': 'BTC\n(Lightning Network)',
     'lnd_invalid_conf': 'LND config is invalid.',
     'lnd_unable_create_invo': 'Unable to create a LND invoice.',
 
