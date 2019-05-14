@@ -26,6 +26,7 @@ class WaitFiatScreen(MainScreenBase):
         self.payment_paid = 0
         self.payment_change = 0
         self.ids.numpad.number_display = ''
+        self.ids.numpad.number = ''
         self.app.send_data_to_subproc('screen', 'idle')
 
     def back_to_input_screen(self):

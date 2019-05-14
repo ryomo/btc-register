@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 class NumPad(BoxLayout):
     MAX_DIGITS = 12
 
-    number_display = StringProperty()  # type: str  # Numbers to be displayed.
-    number = ''  # type: str  # Numbers internally used. Need to use `.` as decimal point.
+    number_display = StringProperty()  # type: str  # Number to be displayed. `.` or `,` can be used as decimal point.
+    number = ''  # type: str  # Number internally used. Need to use `.` as decimal point.
 
     def __init__(self, **kwargs):
         """Note: At this moment, the screen is not initialized."""

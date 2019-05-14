@@ -64,6 +64,7 @@ class HomeScreen(MainScreenBase):
 
     def clear_inputted_data(self):
         self.ids.numpad.number_display = ''
+        self.ids.numpad.number = ''
         self.ids.item_list.clear_items()
 
     def on_btcprice(self, instance, btcprice):
