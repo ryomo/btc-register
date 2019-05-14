@@ -1,3 +1,5 @@
+![demo](https://github.com/ryomo/btc-register/blob/media/demo.gif)
+
 [English] [[日本語]](README.ja.md)
 
 # btc-register
