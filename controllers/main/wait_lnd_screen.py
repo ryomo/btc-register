@@ -29,10 +29,12 @@ class WaitLndScreen(MainScreenBase):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.lnd_subscribe_invoices_thread = ...  # type: LndStreamThread
-        self.is_payment_confirmed = False
+        self.is_payment_confirmed = ...  # type: bool
 
     def on_enter(self, *args):
         super().on_enter(*args)
+
+        self.is_payment_confirmed = False
 
         self.schedule_interval(self.update, 1 / 30)
 
