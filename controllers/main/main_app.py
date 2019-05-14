@@ -59,7 +59,7 @@ class MainApp(AppBase):
         else:
             self.lnd = None
 
-        self.exchange = Exchange(self.app_config.get('btc', 'price'), self.fiat.name)
+        self.exchange = Exchange(self.app_config.get('btc', 'price'), self.fiat.name, self.fiat.frac_digits)
 
         Clock.schedule_once(self.update_btcdata)
         Clock.schedule_interval(self.update_btcdata, 60)

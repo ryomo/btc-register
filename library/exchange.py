@@ -15,11 +15,13 @@ class Exchange:
     NETWORK_TIMEOUT = 10
 
     exchanges = {
+        'Blockchain': ['USD', 'AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'DKK', 'EUR', 'GBP', 'HKD', 'INR', 'ISK', 'JPY',
+                       'KRW', 'NZD', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TWD'],
         'GDAX': ['USD'],
         'bitFlyer': ['JPY'],
     }
 
-    def __init__(self, name: str = 'GDAX', fiat_name: str = 'USD'):
+    def __init__(self, name: str = 'Blockchain', fiat_name: str = 'USD', fiat_fractional_digits: int = 2):
 
         # If specified `name` is not valid, one exchange in `self.exchanges` will be set.
         if name not in self.exchanges.keys():
@@ -31,6 +33,7 @@ class Exchange:
 
         self.name = name
         self.fiat_name = fiat_name
+        self.fiat_fractional_digits = fiat_fractional_digits
 
     @staticmethod
     def get_exchange_list(fiat_name=None) -> List[str]:
@@ -46,11 +49,26 @@ class Exchange:
         else:
             return list(Exchange.exchanges.keys())
 
-    def fetch_btc_price(self) -> int:   # TODO: Decimal
+    def fetch_btc_price(self) -> int:
+        """
+        Fetch btc price from the exchange.
+        :return: In cents, not in dollars.
+        """
+        if self.name == 'Blockchain':
+            return self._fetch_from_blockchain(self.fiat_name)
         if self.name == 'GDAX':
             return self._fetch_from_gdax()
         if self.name == 'bitFlyer':
             return self._fetch_from_bitflyer()
+
+    def _fetch_from_blockchain(self, fiat_name: str) -> int:
+        url = 'https://blockchain.info/ticker'
+        response = requests.get(url, timeout=self.NETWORK_TIMEOUT)
+        if not response:
+            raise ExchangeException('No response received from {}'.format(self.name))
+        json_data = response.json()
+        price = Decimal(json_data[fiat_name]['last']) * 10 ** self.fiat_fractional_digits
+        return int(price)
 
     def _fetch_from_gdax(self) -> int:
         url = 'https://api.pro.coinbase.com/products/BTC-USD/ticker'
