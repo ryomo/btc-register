@@ -1,5 +1,6 @@
 <SettingScreen>:
     lang_spinner: lang_spinner
+    fiat_spinner: fiat_spinner
     exchange_spinner: exchange_spinner
 
     canvas.before:
@@ -47,6 +48,18 @@
                         id: lang_spinner
                         values: root.langs
                         on_text: root.select_lang_spinner(self.text)
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: 48
+                    LabelSection:
+                        size_hint_x: 3
+                        text: app.m('setting_fiat_currency')
+                    Spinner:
+                        size_hint_x: 7
+                        id: fiat_spinner
+                        values: root.fiats
+                        on_text: root.select_fiat_spinner(self.text)
 
                 BoxLayout:
                     size_hint_y: None

@@ -9,6 +9,8 @@ logger = logging.getLogger(__name__)
 class Messenger:
     DEFAULT_LANG = 'en'
 
+    langs = ['en', 'ja']
+
     def __init__(self, lang='en'):
         if lang == self.DEFAULT_LANG:
             self.messages = default_messages
