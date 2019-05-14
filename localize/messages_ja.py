@@ -61,6 +61,7 @@ messages = {
                          '変更するには、`/boot/btc-register-config/config.ini`を編集する必要があります。',
     'save_and_restart': '保存して再起動',
     'language': '言語',
+    'setting_fiat_currency': '法定通貨',
     'price_reference_exchange': '価格を参照する取引所',
 
     # wait_fiat_screen.py

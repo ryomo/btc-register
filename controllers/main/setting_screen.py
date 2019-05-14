@@ -1,16 +1,19 @@
 import logging
+from typing import List
 
 from kivy.properties import ListProperty, StringProperty
 
 from controllers.main.main_screen_base import MainScreenBase
 from library.exchange import ExchangeEnum
+from localize.fiat import Fiat
 
 logger = logging.getLogger(__name__)
 
 
 class SettingScreen(MainScreenBase):
-    langs = ListProperty()
-    exchanges = ListProperty()
+    langs = ListProperty()  # type: List[str]
+    fiats = ListProperty()  # type: List[str]
+    exchanges = ListProperty()  # type: List[str]
 
     shop_name = StringProperty()
     lnd_url = StringProperty()
@@ -20,6 +23,7 @@ class SettingScreen(MainScreenBase):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.selected_lang_name = None  # str
+        self.selected_fiat_name = None  # str
         self.selected_exchange_name = None  # str
 
     def on_pre_enter(self, *args):
@@ -34,6 +38,10 @@ class SettingScreen(MainScreenBase):
         self.langs = ['en', 'ja']
         self.lang_spinner.text = self.app.app_config.get('app', 'lang')
 
+        # fiat
+        self.fiats = Fiat.get_fiat_list()
+        self.fiat_spinner.text = self.app.app_config.get('app', 'fiat')
+
         # readonly configs
         self.shop_name = self.app.app_config.get('app', 'shop_name')
         self.lnd_url = self.app.app_config.get('lnd', 'url')
@@ -43,6 +51,13 @@ class SettingScreen(MainScreenBase):
     def select_lang_spinner(self, spinner_text):
         self.selected_lang_name = spinner_text
 
+    def select_fiat_spinner(self, spinner_text):
+        self.selected_fiat_name = spinner_text
+
+        self.exchanges = Exchange.get_exchange_list(self.selected_fiat_name)
+        if self.exchange_spinner.text not in self.exchanges:
+            self.exchange_spinner.text = self.exchanges[0]
+
     def select_exchange_spinner(self, spinner_text):
         self.selected_exchange_name = spinner_text
 
@@ -50,11 +65,11 @@ class SettingScreen(MainScreenBase):
         if self.selected_lang_name:
             self.app.app_config.set('app', 'lang', self.selected_lang_name)
 
+        if self.selected_fiat_name:
+            self.app.app_config.set('app', 'fiat', self.selected_fiat_name)
+
         if self.selected_exchange_name:
-            exchange_enum = ExchangeEnum(self.selected_exchange_name)
             self.app.app_config.set('btc', 'price', self.selected_exchange_name)
-            fiat_name = exchange_enum.get_fiat_name()
-            self.app.app_config.set('app', 'fiat', fiat_name)
 
         self.app.app_config.set('app', 'shop_name', self.shop_name)
 

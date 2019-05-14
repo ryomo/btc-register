@@ -61,6 +61,7 @@ messages = {
                          'You needs to edit `/boot/btc-register-config/config.ini`.',
     'save_and_restart': 'Save and Restart',
     'language': 'Language',
+    'setting_fiat_currency': 'Fiat Currency',
     'price_reference_exchange': 'Price Reference Exchange',
 
     # wait_fiat_screen.py
