@@ -9,7 +9,7 @@ from controllers.app_base import AppBase
 from controllers.main.main_screen_manager import MainScreenManager
 from library.config import Config
 from library.db import Db
-from library.exchange import Exchange, ExchangeEnum, ExchangeException
+from library.exchange import Exchange, ExchangeException
 from library.utils import Utils
 from run import APP_PATH, APP_HOME
 
@@ -59,8 +59,7 @@ class MainApp(AppBase):
         else:
             self.lnd = None
 
-        exchange_enum = ExchangeEnum(self.app_config.get('btc', 'price'))  # type: ExchangeEnum
-        self.exchange = Exchange(exchange_enum)
+        self.exchange = Exchange(self.app_config.get('btc', 'price'), self.fiat.name)
 
         Clock.schedule_once(self.update_btcdata)
         Clock.schedule_interval(self.update_btcdata, 60)

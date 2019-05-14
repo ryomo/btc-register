@@ -4,7 +4,7 @@ from typing import List
 from kivy.properties import ListProperty, StringProperty
 
 from controllers.main.main_screen_base import MainScreenBase
-from library.exchange import ExchangeEnum
+from library.exchange import Exchange
 from localize.fiat import Fiat
 from localize.messenger import Messenger
 
@@ -30,11 +30,6 @@ class SettingScreen(MainScreenBase):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
 
-        # exchange
-        self.exchanges = ExchangeEnum.get_value_list()  # e.g. ['GDAX(USD)', 'bitFlyer(JPY)']
-        exchange_enum = self.app.exchange.get_exchange_enum()
-        self.exchange_spinner.text = exchange_enum.value
-
         # language
         self.langs = Messenger.langs
         self.lang_spinner.text = self.app.app_config.get('app', 'lang')
@@ -42,6 +37,10 @@ class SettingScreen(MainScreenBase):
         # fiat
         self.fiats = Fiat.get_fiat_list()
         self.fiat_spinner.text = self.app.app_config.get('app', 'fiat')
+
+        # exchange
+        self.exchanges = Exchange.get_exchange_list(self.app.fiat.name)
+        self.exchange_spinner.text = self.app.exchange.name
 
         # readonly configs
         self.shop_name = self.app.app_config.get('app', 'shop_name')
