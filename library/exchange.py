@@ -44,10 +44,11 @@ class Exchange:
         :return: e.g.) ['Blockchain', 'GDAX']
         """
         if fiat_name:
-            return list(key for key, value in Exchange.exchanges.items() if fiat_name in value)
-
+            exchange_list = list(key for key, value in Exchange.exchanges.items() if fiat_name in value)
         else:
-            return list(Exchange.exchanges.keys())
+            exchange_list = list(Exchange.exchanges.keys())
+
+        return sorted(exchange_list)
 
     def fetch_btc_price(self) -> int:
         """
