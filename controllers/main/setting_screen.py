@@ -6,6 +6,7 @@ from kivy.properties import ListProperty, StringProperty
 from controllers.main.main_screen_base import MainScreenBase
 from library.exchange import ExchangeEnum
 from localize.fiat import Fiat
+from localize.messenger import Messenger
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ class SettingScreen(MainScreenBase):
         self.exchange_spinner.text = exchange_enum.value
 
         # language
-        self.langs = ['en', 'ja']
+        self.langs = Messenger.langs
         self.lang_spinner.text = self.app.app_config.get('app', 'lang')
 
         # fiat
