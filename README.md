@@ -15,6 +15,7 @@ A register which accepts Bitcoin Lightning Network payment.
 
 * LND node for Lightning Network payment
     * v0.5.2-beta or newer
+    * REST connection must be enabled. (e.g. `lnd --restlisten=0.0.0.0:10443`)
 * Raspberry Pi
 * Raspberry Pi Official Touch Display
 * (Optional) HDMI Display
@@ -40,7 +41,8 @@ A register which accepts Bitcoin Lightning Network payment.
     url = https://{your-lnd-node}:{port}
     ```
 
-    * Do not add `{}`
+    * Do not add `{}`.
+    * {port} is the rest listening port. If you did `--restlisten=0.0.0.0:10443`, {port} is `10443`.
 
 4. Put LND's `tls.cert` and `invoice.macaroon` in the `btc-register-config` folder.
 

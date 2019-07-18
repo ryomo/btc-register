@@ -14,6 +14,7 @@ BitcoinのLightning Networkでの支払いを受け付けるレジアプリで�
 
 * LND node
     * v0.5.2-beta or newer
+    * 起動時に`lnd --restlisten=0.0.0.0:10443`などとしてRESTを有効にしていること。
 * Raspberry Pi
     * 3b or better
     * [link](https://raspberry-pi.ksyic.com/main/index/pdp.id/435/pdp.open/435)
@@ -46,6 +47,7 @@ BitcoinのLightning Networkでの支払いを受け付けるレジアプリで�
     ```
 
     * `{}`は付けない。
+    * {ポート番号}は、`--restlisten`オプションで開けたポートを指定する。`--restlisten=0.0.0.0:10443`なら`10443`。
 
 4. LNDの`tls.cert`・`invoice.macaroon`を、同じ`btc-register-config`フォルダに入れる。
 
