@@ -68,7 +68,7 @@ class Exchange:
         if not response:
             raise ExchangeException('No response received from {}'.format(self.name))
         json_data = response.json()
-        price = Decimal(json_data[fiat_name]['last']) * 10 ** self.fiat_fractional_digits
+        price = Decimal(str(json_data[fiat_name]['last'])) * 10 ** self.fiat_fractional_digits
         return int(price)
 
     def _fetch_from_gdax(self) -> int:
@@ -77,7 +77,7 @@ class Exchange:
         if not response:
             raise ExchangeException('No response received from {}'.format(self.name))
         json_data = response.json()
-        price = int(Decimal(json_data['price']) * 100)
+        price = int(Decimal(str(json_data['price'])) * 100)
         return price
 
     def _fetch_from_bitflyer(self) -> int:
@@ -90,7 +90,7 @@ class Exchange:
         if not response:
             raise ExchangeException('No response received from {}'.format(self.name))
         json_data = response.json()
-        price = int(json_data[0]['price'])
+        price = int(str(json_data[0]['price']))
         return price
 
 
